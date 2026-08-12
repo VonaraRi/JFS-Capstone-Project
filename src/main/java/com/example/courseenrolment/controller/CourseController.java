@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/api/courses")
 public class CourseController {
-    // Constructor injection is the recommended way to inject dependencies in Spring. 
+    // Constructor injection is the recommended way to inject dependencies in Spring.
     // It makes the class easier to test and ensures that the dependency is not null.
     private final CourseService courseService;
 
