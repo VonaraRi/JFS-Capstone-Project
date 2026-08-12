@@ -1,0 +1,35 @@
+### Class check
+GET http://localhost:8080/api/class
+
+### Get all courses
+GET http://localhost:8080/api/courses
+
+### Get one course
+GET http://localhost:8080/api/courses/1
+
+### Get invalid course
+GET http://localhost:8080/api/courses/999
+
+### Create a new course
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+    "courseCode": "CS104",
+    "title": "Introduction to Computer Science",
+    "description": "An introductory course on computer science concepts.",
+    "category": "Computer Science",
+    "maxCapacity": 30
+}
+
+### Create invalid new course
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+    "courseCode": "",
+    "title": "",
+    "description": "",
+    "category": "",
+    "maxCapacity": 0
+}
