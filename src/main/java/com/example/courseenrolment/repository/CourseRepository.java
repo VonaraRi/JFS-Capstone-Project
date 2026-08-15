@@ -15,7 +15,7 @@ public interface CourseRepository extends MongoRepository<Course, String> {
     /api/courses?page=18&size=10 control page and size
     findByStatusIgnoreCase("OPEN")
     {
-        "status": "AVAILABLE"
+        "status": "ACTIVE"
     }
     */
     

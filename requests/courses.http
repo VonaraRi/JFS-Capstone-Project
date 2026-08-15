@@ -52,3 +52,18 @@ Content-Type: application/json
     "category": "",
     "maxCapacity": 0
 }
+
+### Check wrong course ###
+
+### Filter courses by status
+GET http://localhost:8000/api/courses?status=INVALID
+
+### Get Paged courses
+GET http://localhost:8000/api/courses/paged?page=0&size=100
+
+### Get Paged courses sorted by name ascending
+GET http://localhost:8000/api/courses/paged?page=0&size=5&sortBy=unknownDirection&direction=asc
+
+### Get Paged courses
+GET http://localhost:8000/api/courses?status=ACTIVE&level=ADVANCED
+
