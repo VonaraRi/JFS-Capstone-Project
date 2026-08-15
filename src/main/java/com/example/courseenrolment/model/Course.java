@@ -1,42 +1,44 @@
-package com.example.courseenrolment.dto;
+package com.example.courseenrolment.model;
 
-import jakarta.validation.constraints.NotBlank;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-public class CreateTicketRequest {
-    @NotBlank(message = "Course ID is required")
-    private String courseId;
+@Document(collection = "courses")
+public class Course {
+    
+    @Id
+    private String id;
 
-    @NotBlank(message = "Course Code is required")
     private String courseCode;
-
-    @NotBlank(message = "Title is required")
     private String title;
-
-    @NotBlank(message = "Description is required")
     private String description;
-
-    @NotBlank(message = "Category is required")
     private String category;
-
-    @NotBlank(message = "Level is required")
     private String level;
-
-    @NotBlank(message = "Max Capacity is required")
     private String maxCapacity;
-
-    @NotBlank(message = "Status is required")
     private String status;
-
-    @NotBlank(message = "Created At is required")
     private String createdAt;
 
-    // Standard getters and setters are required for Jackson to bind JSON -> object
-    public String getCourseId() {
-        return courseId;
+
+    public Course() {
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
+    public Course(String courseCode, String title, String description, String category, String level, String maxCapacity, String status, String createdAt) {
+        this.courseCode = courseCode;
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.level = level;
+        this.maxCapacity = maxCapacity;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCourseCode() {

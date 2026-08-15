@@ -10,12 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.courseenrolment.dto.CourseResponse;
-import com.example.courseenrolment.dto.CreateTicketRequest;
+import com.example.courseenrolment.dto.CreateCourseRequest;
 import com.example.courseenrolment.service.CourseService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
+/*
+Controllers handle HTTP requests and return reponses.
+They are "web layer" of a Spring Boot. Typical pattern:
+- Annotate with @RestController to expose JSON endpoints
+- Inject a Service to perform business logic (separation of concerns)
+*/
 
 @RestController
 @RequestMapping("/api/courses")
@@ -40,9 +48,9 @@ public class CourseController {
         return courseService.getCourseById(id);
     }
     
-    // POST -> Create a new course
+    // POST -> Create a new course. @Valid triggers validation annotations
     @PostMapping
-    public ResponseEntity<CourseResponse> createCourse(@RequestBody CreateTicketRequest request) {
+    public ResponseEntity<CourseResponse> createCourse(@Valid @RequestBody CreateCourseRequest request) {
         CourseResponse createdCourse = courseService.createCourse(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCourse);
     }
