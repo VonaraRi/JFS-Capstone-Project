@@ -19,8 +19,8 @@ public class CreateCourseRequest {
     @NotBlank(message = "Level is required")
     private String level;
 
-    @NotBlank(message = "Max Capacity is required")
-    private String maxCapacity;
+    @NotBlank(message = "Capacity is required")
+    private String capacity;
 
     private String createdAt;
 
@@ -64,13 +64,12 @@ public class CreateCourseRequest {
         this.level = level;
     }
 
-    public String getMaxCapacity() {
-        return maxCapacity;
+    public String getCapacity() {
+        return capacity;
     }
 
-    // Accepts either number or string from JSON payload cleanly
-    public void setMaxCapacity(Object maxCapacity) {
-        this.maxCapacity = maxCapacity != null ? String.valueOf(maxCapacity) : null;
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
     }
 
     public String getCreatedAt() {

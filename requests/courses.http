@@ -1,14 +1,35 @@
 ### Get all courses
-GET http://localhost:8080/api/courses
+GET http://localhost:8000/api/courses
 
 ### Get one course
-GET http://localhost:8080/api/courses/6a7e8c360efce5962977e1fe
+GET http://localhost:8000/api/courses/6a7e8c360efce5962977e1fe
+
+### Filter courses by status
+GET http://localhost:8000/api/courses?status=ACTIVE
+
+### Filter courses by category
+GET http://localhost:8000/api/courses?category=Software Engineering
+
+### Filter courses by level
+GET http://localhost:8000/api/courses?level=Beginner
+
+### Filter courses by capacity
+GET http://localhost:8000/api/courses?capacity=FULL
+
+### Get Paged courses
+GET http://localhost:8000/api/courses/paged?page=0&size=5
+
+### Get Paged courses sorted by name ascending
+GET http://localhost:8000/api/courses/paged?page=0&size=5&sortBy=title&direction=asc
+
+### Get Paged courses sorted by courseCode descending
+GET http://localhost:8000/api/courses/paged?page=0&size=5&sortBy=courseCode&direction=desc
 
 ### Get invalid course
-GET http://localhost:8080/api/courses/999
+GET http://localhost:8000/api/courses/999
 
 ### Create a new course
-POST http://localhost:8080/api/courses
+POST http://localhost:8000/api/courses
 Content-Type: application/json
 
 {
@@ -16,39 +37,12 @@ Content-Type: application/json
     "title": "Introduction to Computer Science",
     "description": "An introductory course on computer science concepts.",
     "category": "Computer Science",
-    "level" : "Easy",
-    "maxCapacity": 30
-}
-
-### Create a second new course
-POST http://localhost:8080/api/courses
-Content-Type: application/json
-
-{
-    "courseCode": "DE102",
-    "title": "Data Engineering Fundamentals",
-    "description": "An introductory course on data engineering.",
-    "category": "Data Engineering",
-    "level" : "Easy",
-    "maxCapacity": "20",
-    "createdAt" : "14-8-2026"
-}
-
-### Create a third new course
-POST http://localhost:8080/api/courses
-Content-Type: application/json
-
-{
-    "courseCode": "CS103",
-    "title": "Computer Science Fundamentals",
-    "description": "An beginner topic of computer science.",
-    "category": "Computer Science",
-    "level" : "Medium",
-    "maxCapacity": "27"
+    "level" : "Beginner"
+    "maxCapacity": "3 Empty"
 }
 
 ### Create invalid new course
-POST http://localhost:8080/api/courses
+POST http://localhost:8000/api/courses
 Content-Type: application/json
 
 {

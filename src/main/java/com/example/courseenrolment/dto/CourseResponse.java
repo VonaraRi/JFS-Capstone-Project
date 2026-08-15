@@ -7,18 +7,18 @@ public class CourseResponse {
     private String description;
     private String category;
     private String level;
-    private String maxCapacity;
+    private String capacity;
     private String status;
     private String createdAt;
 
-    public CourseResponse(String id, String courseCode, String title, String description, String category, String level, String maxCapacity, String status, String createdAt) {
+    public CourseResponse(String id, String courseCode, String title, String description, String category, String level, String capacity, String status, String createdAt) {
         this.id = id;
         this.courseCode = courseCode;
         this.title = title;
         this.description = description;
         this.category = category;
         this.level = level;
-        this.maxCapacity = maxCapacity;
+        this.capacity = capacity;
         this.status = status;
         this.createdAt = createdAt;
     }
@@ -48,8 +48,8 @@ public class CourseResponse {
         return level;
     }
 
-    public String getMaxCapacity() {
-        return maxCapacity;
+    public String getCapacity() {
+        return capacity;
     }
 
     public String getStatus() {

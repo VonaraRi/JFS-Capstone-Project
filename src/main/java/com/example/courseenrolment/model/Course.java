@@ -14,7 +14,7 @@ public class Course {
     private String description;
     private String category;
     private String level;
-    private String maxCapacity;
+    private String capacity;
     private String status;
     private String createdAt;
 
@@ -22,13 +22,13 @@ public class Course {
     public Course() {
     }
 
-    public Course(String courseCode, String title, String description, String category, String level, String maxCapacity, String status, String createdAt) {
+    public Course(String courseCode, String title, String description, String category, String level, String capacity, String status, String createdAt) {
         this.courseCode = courseCode;
         this.title = title;
         this.description = description;
         this.category = category;
         this.level = level;
-        this.maxCapacity = maxCapacity;
+        this.capacity = capacity;
         this.status = status;
         this.createdAt = createdAt;
     }
@@ -81,12 +81,12 @@ public class Course {
         this.level = level;
     }
 
-    public String getMaxCapacity() {
-        return maxCapacity;
+    public String getCapacity() {
+        return capacity;
     }
 
-    public void setMaxCapacity(String maxCapacity) {
-        this.maxCapacity = maxCapacity;
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
     }
 
     public String getStatus() {

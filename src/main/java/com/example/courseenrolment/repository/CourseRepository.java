@@ -25,9 +25,9 @@ public interface CourseRepository extends MongoRepository<Course, String> {
 
     List<Course> findByLevelIgnoreCase(String level);
 
-    List<Course> findByMaxCapacity(String maxCapacity);
+    List<Course> findByCapacity(String capacity);
 
-    boolean existByCourseCode(String courseCode);
+    boolean existsByCourseCode(String courseCode);
 
-    boolean existByCreatedAt(String createdAt);
+    boolean existsByCreatedAt(String createdAt);
 }

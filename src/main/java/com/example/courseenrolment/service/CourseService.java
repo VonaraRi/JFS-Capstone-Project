@@ -5,6 +5,10 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.courseenrolment.dto.CourseResponse;
@@ -14,9 +18,17 @@ import com.example.courseenrolment.exception.ResourceNotFoundException;
 import com.example.courseenrolment.model.Course;
 import com.example.courseenrolment.repository.CourseRepository;
 
+/*
+Services contain business logic.
+To query MongoDB documents, add filtering, add pagination/sorting, and
+log important service operations
+
+validation utk pengesahan
+*/
+
 @Service
 public class CourseService {
-    private static final Logger logger = LoggerFactory.getLogger(CourseService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CourseService.class); // track system activity/event/userEvent...
 
     private final CourseRepository courseRepository;
 
@@ -24,11 +36,41 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public List<CourseResponse> getAllCourses() {
-        return courseRepository.findAll()
-            .stream()
+    public List<CourseResponse> getCourses(String status, String category, String level, String capacity) {
+        logger.info("Fetching courses with status={}, category={}, level={}, capacity={}", status, category, level, capacity);
+
+        List<Course> courses;
+
+        if (hasValue(status)) {
+            courses = courseRepository.findByStatusIgnoreCase(status.trim());
+        } else if (hasValue(category)) {
+            courses = courseRepository.findByCategoryIgnoreCase(category.trim());
+        } else if (hasValue(level)) {
+            courses = courseRepository.findByLevelIgnoreCase(level.trim());
+        } else if (hasValue(capacity)) {
+            courses = courseRepository.findByCapacity(capacity);
+        } else {
+            courses = courseRepository.findAll();
+        }
+
+        logger.info("Found {} course(s)", courses.size());
+
+        return courses.stream()
             .map(this::toResponse)
             .toList();
+    }
+
+    public Page<CourseResponse> getCoursePaged(int page, int size, String sortBy, String direction) {
+        logger.info("Fetching paged course page={}, size={}, sortBy={}, direction={}", page, size, sortBy, direction);
+
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return courseRepository.findAll(pageable)
+                .map(this::toResponse);
     }
 
     public CourseResponse getCourseById(String id) {
@@ -43,7 +85,7 @@ public class CourseService {
     public CourseResponse createCourse(CreateCourseRequest request) {
         String courseCode = request.getCourseCode().trim();
 
-        if (courseRepository.existByCourseCode(courseCode)) {
+        if (courseRepository.existsByCourseCode(courseCode)) {
             throw new DuplicateResourseException("Course code already exist: " + courseCode);
         }
 
@@ -54,8 +96,8 @@ public class CourseService {
             request.getDescription().trim(),
             request.getCategory().trim(),
             request.getLevel().trim(),
-            request.getMaxCapacity().trim(),
-            "OPEN", // Backend sets default status
+            request.getCapacity().trim(),
+            "ACTIVE", // Backend sets default status
             (request.getCreatedAt() != null && !request.getCreatedAt().isBlank()) 
                 ? request.getCreatedAt().trim()
                 : LocalDate.now().toString()
@@ -76,9 +118,14 @@ public class CourseService {
             course.getDescription(),
             course.getCategory(),
             course.getLevel(),
-            course.getMaxCapacity(),
+            course.getCapacity(),
             course.getStatus(),
             course.getCreatedAt()
         );
+    }
+
+    // Helper method to check if string parameter is non-null and not empty
+    private boolean hasValue(String str) {
+        return str != null && !str.trim().isEmpty();
     }
 }
