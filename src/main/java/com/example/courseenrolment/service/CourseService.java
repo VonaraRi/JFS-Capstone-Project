@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.courseenrolment.dto.CourseResponse;
 import com.example.courseenrolment.dto.CreateCourseRequest;
+import com.example.courseenrolment.exception.DuplicateResourseException;
 import com.example.courseenrolment.exception.ResourceNotFoundException;
 import com.example.courseenrolment.model.Course;
 import com.example.courseenrolment.repository.CourseRepository;
