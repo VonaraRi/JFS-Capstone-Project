@@ -1,11 +1,8 @@
-### Class check
-GET http://localhost:8080/api/class
-
 ### Get all courses
 GET http://localhost:8080/api/courses
 
 ### Get one course
-GET http://localhost:8080/api/courses/1
+GET http://localhost:8080/api/courses/6a7e8c360efce5962977e1fe
 
 ### Get invalid course
 GET http://localhost:8080/api/courses/999
@@ -19,7 +16,35 @@ Content-Type: application/json
     "title": "Introduction to Computer Science",
     "description": "An introductory course on computer science concepts.",
     "category": "Computer Science",
+    "level" : "Easy",
     "maxCapacity": 30
+}
+
+### Create a second new course
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+    "courseCode": "DE102",
+    "title": "Data Engineering Fundamentals",
+    "description": "An introductory course on data engineering.",
+    "category": "Data Engineering",
+    "level" : "Easy",
+    "maxCapacity": "20",
+    "createdAt" : "14-8-2026"
+}
+
+### Create a third new course
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+    "courseCode": "CS103",
+    "title": "Computer Science Fundamentals",
+    "description": "An beginner topic of computer science.",
+    "category": "Computer Science",
+    "level" : "Medium",
+    "maxCapacity": "27"
 }
 
 ### Create invalid new course
