@@ -1,3 +1,7 @@
+@baseUrl = http://localhost:8000
+
+### Get class
+GET http://localhost:8000/api/class
 ### Get all courses
 GET http://localhost:8000/api/courses
 
@@ -37,8 +41,8 @@ Content-Type: application/json
     "title": "Introduction to Computer Science",
     "description": "An introductory course on computer science concepts.",
     "category": "Computer Science",
-    "level" : "Beginner"
-    "maxCapacity": "3 Empty"
+    "level" : "Beginner",
+    "capacity": "3 Empty"
 }
 
 ### Create invalid new course
@@ -50,10 +54,11 @@ Content-Type: application/json
     "title": "",
     "description": "",
     "category": "",
-    "maxCapacity": 0
+    "capacity": 0
 }
 
-### Check wrong course ###
+
+### ======== Check wrong course ==========
 
 ### Filter courses by status
 GET http://localhost:8000/api/courses?status=INVALID
@@ -67,3 +72,43 @@ GET http://localhost:8000/api/courses/paged?page=0&size=5&sortBy=unknownDirectio
 ### Get Paged courses
 GET http://localhost:8000/api/courses?status=ACTIVE&level=ADVANCED
 
+
+### ======== JWT Authenication Tests =========
+
+### Try to access course without token - 401
+GET {{baseUrl}}/api/courses
+
+### Register a normal student - return token with role student
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+    "name" : "Normal Student",
+    "email" : "student@example.com",
+    "password" : "Student@12345"
+}
+
+### Login normal student
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email" : "student@example.com",
+    "password" : "Student@12345"
+}
+
+### Try to create course with USER token - return 403 forbidden
+POST {{baseUrl}}/api/courses
+Authorization: Bearer STUDENT-TOKEN
+Content-Type: application/json
+
+{
+    "courseCode": "SE105",
+    "title": "Introduction to C Programming",
+    "description": "An Introducy of C Programming.",
+    "category": "Programming",
+    "level" : "Beginner",
+    "capacity": "3 Empty"
+}
+
+### Login seeded admin user
