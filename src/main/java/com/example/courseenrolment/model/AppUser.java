@@ -4,8 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "students")
-public class StudentApp {
+@Document(collection = "users")
+public class AppUser {
 
     @Id
     private String id;
@@ -19,10 +19,10 @@ public class StudentApp {
 
     private String role;
 
-    public StudentApp(){
+    public AppUser(){
     }
 
-    public StudentApp(String name, String email, String passwordHash, String role){
+    public AppUser(String name, String email, String passwordHash, String role){
         this.name = name;
         this.email = email;
         this.passwordHash = passwordHash;

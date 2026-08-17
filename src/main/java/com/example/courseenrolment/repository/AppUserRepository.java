@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.example.courseenrolment.model.StudentApp;
+import com.example.courseenrolment.model.AppUser;
 
-public interface StudentAppRepository extends MongoRepository<StudentApp, String> {
-    Optional<StudentApp> findByEmailIgnoreCase(String email);
+public interface AppUserRepository extends MongoRepository<AppUser, String> {
+    Optional<AppUser> findByEmailIgnoreCase(String email);
 
     boolean existsByEmailIgnoreCase(String email);
 }

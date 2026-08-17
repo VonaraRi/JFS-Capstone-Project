@@ -11,25 +11,25 @@ import com.example.courseenrolment.dto.AuthResponse;
 import com.example.courseenrolment.dto.LoginRequest;
 import com.example.courseenrolment.dto.RegisterRequest;
 import com.example.courseenrolment.exception.DuplicateResourseException;
-import com.example.courseenrolment.model.StudentApp;
-import com.example.courseenrolment.repository.StudentAppRepository;
+import com.example.courseenrolment.model.AppUser;
+import com.example.courseenrolment.repository.AppUserRepository;
 
 @Service
 public class AuthService {
     
     private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
     
-    private final StudentAppRepository studentAppRepository;
+    private final AppUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
     public AuthService(
-            StudentAppRepository studentAppRepository,
+            AppUserRepository userRepository,
             PasswordEncoder passwordEncoder,
             AuthenticationManager authenticationManager,
             JwtService jwtService) {
-        this.studentAppRepository = studentAppRepository;
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
@@ -38,21 +38,21 @@ public class AuthService {
     public AuthResponse register(RegisterRequest request) {
         String email = normalizeEmail(request.getEmail());
 
-        if (studentAppRepository.existsByEmailIgnoreCase(email)) {
+        if (userRepository.existsByEmailIgnoreCase(email)) {
             throw new DuplicateResourseException("Email already exists: " + email);
         }
 
-        StudentApp student = new StudentApp(
-                    request.getName().trim(),
-                    email,
-                    passwordEncoder.encode(request.getPassword()),
-                    "STUDENT"
+        AppUser user = new AppUser(
+                request.getName().trim(),
+                email,
+                passwordEncoder.encode(request.getPassword()),
+                "STUDENT"
         );
 
-        StudentApp savedStudent = studentAppRepository.save(student);
-        logger.info("Registered new student email={} role={}", savedStudent.getEmail(), savedStudent.getRole());
+        AppUser savedUser = userRepository.save(user);
+        logger.info("Registered new user email={} role={}", savedUser.getEmail(), savedUser.getRole());
 
-        return buildAuthResponse(savedStudent);
+        return buildAuthResponse(savedUser);
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -61,25 +61,26 @@ public class AuthService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(email, request.getPassword())
         );
-
-        StudentApp student = studentAppRepository.findByEmailIgnoreCase(email)
+        
+        AppUser user = userRepository.findByEmailIgnoreCase(email)
                 .orElseThrow();
 
-        logger.info("Student logged in email={} role={}", student.getEmail(), student.getRole());
+        logger.info("User logged in email={} role={}", user.getEmail(), user.getRole());
 
-        return buildAuthResponse(student);
+        return buildAuthResponse(user);
     }
 
-    public AuthResponse buildAuthResponse(StudentApp student) {
-        String token = jwtService.generateToken(student);
+    public AuthResponse buildAuthResponse(AppUser user) {
+        String token = jwtService.generateToken(user);
 
-        return new AuthResponse(token,
+        return new AuthResponse(
+            token,
             "Bearer",
             jwtService.getExpirationMinutes(),
-            student.getId(),
-            student.getName(),
-            student.getEmail(),
-            student.getRole()
+            user.getId(),
+            user.getName(),
+            user.getEmail(),
+            user.getRole()
         );
     }
 

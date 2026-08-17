@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
-import com.example.courseenrolment.model.StudentApp;
+import com.example.courseenrolment.model.AppUser;
 
 @Service
 public class JwtService {
@@ -26,22 +26,22 @@ public class JwtService {
         this.expirationMinutes = expirationMinutes;
     }
 
-    public String generateToken(StudentApp student) {
+    public String generateToken(AppUser user) {
         Instant now = Instant.now();
 
-        JwtClaimsSet claim = JwtClaimsSet.builder()
+        JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("course-enrolment-api")
                 .issuedAt(now)
                 .expiresAt(now.plus(expirationMinutes, ChronoUnit.MINUTES))
-                .subject(student.getEmail())
-                .claim("studentId", student.getId())
-                .claim("name", student.getName())
-                .claim("role", student.getRole())
+                .subject(user.getEmail())
+                .claim("userId", user.getId())
+                .claim("name", user.getName())
+                .claim("role", user.getRole())
                 .build();
 
         JwsHeader header = JwsHeader.with(MacAlgorithm.HS256).build();
 
-        return jwtEncoder.encode(JwtEncoderParameters.from(header, claim)).getTokenValue();
+        return jwtEncoder.encode(JwtEncoderParameters.from(header, claims)).getTokenValue();
     }
 
     public long getExpirationMinutes() {
