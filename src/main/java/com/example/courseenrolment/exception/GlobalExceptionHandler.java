@@ -21,6 +21,13 @@ public class GlobalExceptionHandler {
         return new ApiErrorResponse(exception.getMessage());
     }
 
+    // Map DuplicateResourseException to a 409 Conflict response
+    @ExceptionHandler(DuplicateResourseException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiErrorResponse handleDuplicateResourceException(DuplicateResourseException exception) {
+        return new ApiErrorResponse(exception.getMessage());
+    }
+
     // Map validation errors (triggered by @Valid) to a 400 Bad Request response
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

@@ -1,3 +1,4 @@
+C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\config\UserDataSeeder.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\controller\AuthController.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\controller\ClassController.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\controller\CourseController.java
@@ -12,10 +13,11 @@ C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\cour
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\exception\DuplicateResourseException.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\exception\GlobalExceptionHandler.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\exception\ResourceNotFoundException.java
+C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\model\AppUser.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\model\Course.java
-C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\model\StudentApp.java
+C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\repository\AppUserRepository.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\repository\CourseRepository.java
-C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\repository\StudentAppRepository.java
+C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\security\AppUserDetailsService.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\security\SecurityConfig.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\service\AuthService.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\service\CourseService.java

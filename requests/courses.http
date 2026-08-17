@@ -1,4 +1,6 @@
 @baseUrl = http://localhost:8000
+@adminToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJBRE1JTiIsImlzcyI6ImNvdXJzZS1lbnJvbG1lbnQtYXBpIiwibmFtZSI6IkFkbWluIFVzZXIiLCJleHAiOjE3ODY5OTAwMzIsImlhdCI6MTc4Njk4NjQzMiwidXNlcklkIjoiNmE4MzNjYWJjYTRjODA1NmYxZjI5MThlIn0._PTSyENOMGucuinFV-WJARHjxjSa49MLC-GIbYOxDUk
+@studentToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50QGV4YW1wbGUuY29tIiwicm9sZSI6IlNUVURFTlQiLCJpc3MiOiJjb3Vyc2UtZW5yb2xtZW50LWFwaSIsIm5hbWUiOiJTdHVkZW50IFVzZXIiLCJleHAiOjE3ODY5ODk4NDQsImlhdCI6MTc4Njk4NjI0NCwidXNlcklkIjoiNmE4MzNjYWJjYTRjODA1NmYxZjI5MThmIn0.pnK7SwaonmF5pYH3S-LJq4S-tolCYUZ99cwFI532kmA
 
 ### Get class
 GET http://localhost:8000/api/class
@@ -83,9 +85,9 @@ POST {{baseUrl}}/api/auth/register
 Content-Type: application/json
 
 {
-    "name" : "Normal Student",
-    "email" : "student@example.com",
-    "password" : "Student@12345"
+    "name" : "Normal User",
+    "email" : "user@example.com",
+    "password" : "user@12345"
 }
 
 ### Login normal student
@@ -99,7 +101,7 @@ Content-Type: application/json
 
 ### Try to create course with USER token - return 403 forbidden
 POST {{baseUrl}}/api/courses
-Authorization: Bearer STUDENT-TOKEN
+Authorization: Bearer {{studentToken}}
 Content-Type: application/json
 
 {
@@ -112,3 +114,43 @@ Content-Type: application/json
 }
 
 ### Login seeded admin user
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "Admin@12345"
+}
+
+### Create course with ADMIN token
+POST {{baseUrl}}/api/courses
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+    "courseCode": "SE105",
+    "title": "Introduction to C Programming",
+    "description": "An Introducy of C Programming.",
+    "category": "Programming",
+    "level" : "Beginner",
+    "capacity": "3 Empty"
+}
+
+### Login with wrong password - return 401 Unauthorized
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email" : "admin@example.com",
+    "password": "wrong-password"
+}
+
+### Register duplicate email - return 409 conflict
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+    "name": "duplicate user",
+    "email": "user@example.com",
+    "password": "User@12345"
+}
