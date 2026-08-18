@@ -1,0 +1,60 @@
+### ====== Api Quality, Versioning, Docs and Reports ======
+
+@baseUrl = http://localhost:8000
+@adminToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJBRE1JTiIsImlzcyI6ImNvdXJzZS1lbnJvbG1lbnQtYXBpIiwibmFtZSI6IkFkbWluIFVzZXIiLCJleHAiOjE3ODcwNDI2ODYsImlhdCI6MTc4NzAzOTA4NiwidXNlcklkIjoiNmE4MzNjYWJjYTRjODA1NmYxZjI5MThlIn0.FpNrEz5NbikdlvhKs9aZP0qmw3GNvrOUHE9kv6N5GS4
+
+### Public class check
+GET {{baseUrl}}/api/class
+
+### Public API information
+GET {{baseUrl}}/api/v1/info
+
+### Public API documentation
+GET {{baseUrl}}/api/docs
+
+### Login as seeded admin
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "Admin@12345"
+}
+
+### Get all courses
+GET {{baseUrl}}/api/v1/courses
+Authorization: Bearer {{adminToken}}
+
+### Get only one course
+GET {{baseUrl}}/api/v1/courses/6a7eea1a2ea649523eeb6a82
+Authorization: Bearer {{adminToken}}
+
+### Create one course
+POST {{baseUrl}}/api/courses
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+    "courseCode": "PL101",
+    "title": "C++ Programming",
+    "description": "An introductory course on C++ programming.",
+    "category": "Programming",
+    "level" : "Intermediate",
+    "capacity": "FULL"
+}
+
+### Course report by category
+GET {{baseUrl}}/api/v1/reports/courses-by-category
+Authorization: Bearer {{adminToken}}
+
+### Course report by level
+GET {{baseUrl}}/api/v1/reports/courses-by-level
+Authorization: Bearer {{adminToken}}
+
+### Course report by capacity
+GET {{baseUrl}}/api/v1/reports/courses-by-capacity
+Authorization: Bearer {{adminToken}}
+
+### Course report by status
+GET {{baseUrl}}/api/v1/reports/courses-by-status
+Authorization: Bearer {{adminToken}}

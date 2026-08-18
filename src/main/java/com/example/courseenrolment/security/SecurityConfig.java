@@ -49,14 +49,21 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/health").permitAll()
+                // Public endpoints
+                .requestMatchers("/api/health", "/api/class", "/api/v1/info", "/api/docs").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/courses/**").hasAnyRole("STUDENT", "ADMIN")
-                .requestMatchers(HttpMethod.POST, "/api/courses").hasRole("ADMIN")
+                
+                // Course endpoints (supports both /api/courses and /api/v1/courses)
+                .requestMatchers(HttpMethod.GET, "/api/courses/**", "/api/v1/courses/**").hasAnyRole("STUDENT", "ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/courses", "/api/v1/courses").hasRole("ADMIN")
+                
+                // Reporting endpoints
+                .requestMatchers("/api/v1/reports/**").hasRole("ADMIN")
+                
                 .anyRequest().authenticated()
             )
             .oauth2ResourceServer(oauth -> oauth
-                .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter))
+                    .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter))
             )
             .httpBasic(httpBasic -> httpBasic.disable())
             .formLogin(formLogin -> formLogin.disable());
