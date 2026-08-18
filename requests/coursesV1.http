@@ -1,7 +1,7 @@
 ### ====== Api Quality, Versioning, Docs and Reports ======
 
-@baseUrl = http://localhost:8000
-@adminToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJBRE1JTiIsImlzcyI6ImNvdXJzZS1lbnJvbG1lbnQtYXBpIiwibmFtZSI6IkFkbWluIFVzZXIiLCJleHAiOjE3ODcwNDI2ODYsImlhdCI6MTc4NzAzOTA4NiwidXNlcklkIjoiNmE4MzNjYWJjYTRjODA1NmYxZjI5MThlIn0.FpNrEz5NbikdlvhKs9aZP0qmw3GNvrOUHE9kv6N5GS4
+@baseUrl= http://localhost:8000
+@adminToken= eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJBRE1JTiIsImlzcyI6ImNvdXJzZS1lbnJvbG1lbnQtYXBpIiwibmFtZSI6IkFkbWluIFVzZXIiLCJleHAiOjE3ODcwNDI2ODYsImlhdCI6MTc4NzAzOTA4NiwidXNlcklkIjoiNmE4MzNjYWJjYTRjODA1NmYxZjI5MThlIn0.FpNrEz5NbikdlvhKs9aZP0qmw3GNvrOUHE9kv6N5GS4
 
 ### Public class check
 GET {{baseUrl}}/api/class
@@ -58,3 +58,4 @@ Authorization: Bearer {{adminToken}}
 ### Course report by status
 GET {{baseUrl}}/api/v1/reports/courses-by-status
 Authorization: Bearer {{adminToken}}
+

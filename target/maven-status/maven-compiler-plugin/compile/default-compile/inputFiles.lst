@@ -5,6 +5,7 @@ C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\cour
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\controller\ClassController.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\controller\CourseController.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\controller\CourseV1Controller.java
+C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\controller\EnrolmentV1Controller.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\controller\ReportController.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\CourseEnrolmentApplication.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\dto\ApiDocumentationResponse.java
@@ -13,6 +14,8 @@ C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\cour
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\dto\AuthResponse.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\dto\CourseResponse.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\dto\CreateCourseRequest.java
+C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\dto\EnrolmentRequest.java
+C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\dto\EnrolmentResponse.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\dto\FieldErrorDetail.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\dto\LoginRequest.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\dto\RegisterRequest.java
@@ -22,11 +25,14 @@ C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\cour
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\exception\ResourceNotFoundException.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\model\AppUser.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\model\Course.java
+C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\model\Enrolment.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\repository\AppUserRepository.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\repository\CourseRepository.java
+C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\repository\EnrolmentRepository.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\security\AppUserDetailsService.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\security\SecurityConfig.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\service\AuthService.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\service\CourseReportService.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\service\CourseService.java
+C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\service\EnrolmentService.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\service\JwtService.java

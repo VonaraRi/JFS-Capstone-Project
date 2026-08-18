@@ -4,16 +4,16 @@ public class AuthResponse {
     private String token;
     private String tokenType;
     private long expiresInMinutes;
-    private String studentId;
+    private String userId;
     private String name;
     private String email;
     private String role;
 
-    public AuthResponse(String token, String tokenType, long expiresInMinutes, String studentId, String name, String email, String role){
+    public AuthResponse(String token, String tokenType, long expiresInMinutes, String userId, String name, String email, String role){
         this.token = token;
         this.tokenType = tokenType;
         this.expiresInMinutes = expiresInMinutes;
-        this.studentId = studentId;
+        this.userId = userId;
         this.name = name;
         this.email = email;
         this.role = role;
@@ -31,8 +31,8 @@ public class AuthResponse {
         return expiresInMinutes;
     }
 
-    public String getStudentId() {
-        return studentId;
+    public String getUserId() {
+        return userId;
     }
 
     public String getName() {

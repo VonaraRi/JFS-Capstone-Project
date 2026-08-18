@@ -1,0 +1,25 @@
+@baseUrl = http://localhost:8000
+@studentToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHVkZW50QGV4YW1wbGUuY29tIiwicm9sZSI6IlNUVURFTlQiLCJpc3MiOiJjb3Vyc2UtZW5yb2xtZW50LWFwaSIsIm5hbWUiOiJTdHVkZW50IFVzZXIiLCJleHAiOjE3ODcwNzIxODIsImlhdCI6MTc4NzA2ODU4MiwidXNlcklkIjoiNmE4MzNjYWJjYTRjODA1NmYxZjI5MThmIn0.ZTQIWYzPyHHpNWjx3zSa_ja7tTJdFVq3Oz2y8j55BBc
+@courseId = 6a7eea1a2ea649523eeb6a82
+
+### 1. Login normal student
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "student@example.com",
+    "password": "Student@12345"
+}
+
+### 2. Enroll Student in a Course
+POST {{baseUrl}}/api/v1/enrolments
+Authorization: Bearer {{studentToken}}
+Content-Type: application/json
+
+{
+  "courseId": "{{courseId}}"
+}
+
+### 3. Get My Enrolled Courses
+GET {{baseUrl}}/api/v1/enrolments/my-courses
+Authorization: Bearer {{studentToken}}

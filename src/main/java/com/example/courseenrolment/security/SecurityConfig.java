@@ -56,9 +56,13 @@ public class SecurityConfig {
                 // Course endpoints (supports both /api/courses and /api/v1/courses)
                 .requestMatchers(HttpMethod.GET, "/api/courses/**", "/api/v1/courses/**").hasAnyRole("STUDENT", "ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/courses", "/api/v1/courses").hasRole("ADMIN")
+
+                // Enrolment endpoint
+                .requestMatchers("/api/v1/enrolments/**").hasRole("STUDENT")
                 
                 // Reporting endpoints
                 .requestMatchers("/api/v1/reports/**").hasRole("ADMIN")
+
                 
                 .anyRequest().authenticated()
             )
