@@ -20,8 +20,10 @@ C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\cour
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\dto\LoginRequest.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\dto\RegisterRequest.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\dto\ReportCountResponse.java
+C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\dto\UpdateCourseRequest.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\exception\DuplicateResourseException.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\exception\GlobalExceptionHandler.java
+C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\exception\InvalidRequestException.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\exception\ResourceNotFoundException.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\model\AppUser.java
 C:\Users\Rionnalyn\Downloads\JFS-Capstone-Project\src\main\java\com\example\courseenrolment\model\Course.java

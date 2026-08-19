@@ -30,6 +30,10 @@ export default function CourseDetail({ course }) {
                     <dd>{course.category}</dd>
                 </div>
                 <div>
+                    <dt>Level</dt>
+                    <dd>{course.level}</dd>
+                </div>
+                <div>
                     <dt>Capacity</dt>
                     <dd>{course.capacity}</dd>
                 </div>

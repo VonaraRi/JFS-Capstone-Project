@@ -1,35 +1,48 @@
+import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import AppShell from './components/AppShell.jsx';
+import LoadingMessage from './components/LoadingMessage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import CoursesPage from './pages/CoursesPage.jsx';
-import ReportsPage from './pages/ReportsPage.jsx';
-import DocsPage from './pages/DocsPage.jsx';
-import NotFoundPage from './pages/NotFoundPage.jsx';
+import { CourseDataProvider } from './context/CourseDataContext.jsx';
+
+const CourseFormPage = lazy(() => import('./pages/CourseFormPage.jsx'));
+const ReportsPage = lazy(() => import('./pages/ReportsPage.jsx'));
+const DocsPage = lazy(() => import('./pages/DocsPage.jsx'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage.jsx'));
+
+function withFallback(element) {
+  return <Suspense fallback={<LoadingMessage message="Loading page..." />}>{element}</Suspense>;
+}
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/app/dashboard" replace />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/docs" element={<DocsPage />} />
+      <Route path="/docs" element={withFallback(<DocsPage />)} />
 
       <Route
         path="/app"
         element={
           <ProtectedRoute>
-            <AppShell />
+            <CourseDataProvider>
+              <AppShell />
+            </CourseDataProvider>
           </ProtectedRoute>
         }
       >
         <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="courses" element={<CoursesPage />} />
-        <Route path="reports" element={<ReportsPage />} />
+        <Route path="courses/new" element={withFallback(<CourseFormPage />)} />
+        <Route path="courses/:courseId/edit" element={withFallback(<CourseFormPage />)} />
+        <Route path="reports" element={withFallback(<ReportsPage />)} />
       </Route>
 
-      <Route path="*" element={<NotFoundPage />} />
+      <Route path="*" element={withFallback(<NotFoundPage />)} />
     </Routes>
   );
 }

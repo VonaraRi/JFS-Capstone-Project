@@ -17,8 +17,7 @@ public class ApiInfoController {
             "version", "v1",
             "status", "active",
             "documentation", "/api/docs",
-            "reports", "/api/v1/reports/courses/courses-by-status",
-            "description", "API for course enrolment"
+            "reports", "/api/v1/reports/courses/courses-by-status"
         );
     }
     

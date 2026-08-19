@@ -2,6 +2,7 @@ package com.example.courseenrolment.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,22 +14,20 @@ import org.springframework.stereotype.Service;
 
 import com.example.courseenrolment.dto.CourseResponse;
 import com.example.courseenrolment.dto.CreateCourseRequest;
+import com.example.courseenrolment.dto.UpdateCourseRequest;
 import com.example.courseenrolment.exception.DuplicateResourseException;
+import com.example.courseenrolment.exception.InvalidRequestException;
 import com.example.courseenrolment.exception.ResourceNotFoundException;
 import com.example.courseenrolment.model.Course;
 import com.example.courseenrolment.repository.CourseRepository;
 
-/*
-Services contain business logic.
-To query MongoDB documents, add filtering, add pagination/sorting, and
-log important service operations
-
-validation utk pengesahan
-*/
-
 @Service
 public class CourseService {
-    private static final Logger logger = LoggerFactory.getLogger(CourseService.class); // track system activity/event/userEvent...
+
+    private static final Logger logger = LoggerFactory.getLogger(CourseService.class);
+
+    private static final Set<String> ALLOWED_STATUS = Set.of("ACTIVE", "INACTIVE");
+    private static final Set<String> ALLOWED_LEVEL = Set.of("Beginner", "Intermediate", "Advanced");
 
     private final CourseRepository courseRepository;
 
@@ -48,7 +47,7 @@ public class CourseService {
         } else if (hasValue(level)) {
             courses = courseRepository.findByLevelIgnoreCase(level.trim());
         } else if (hasValue(capacity)) {
-            courses = courseRepository.findByCapacity(capacity);
+            courses = courseRepository.findByCapacity(capacity.trim());
         } else {
             courses = courseRepository.findAll();
         }
@@ -56,12 +55,12 @@ public class CourseService {
         logger.info("Found {} course(s)", courses.size());
 
         return courses.stream()
-            .map(this::toResponse)
-            .toList();
+                .map(this::toResponse)
+                .toList();
     }
 
     public Page<CourseResponse> getCoursePaged(int page, int size, String sortBy, String direction) {
-        logger.info("Fetching paged course page={}, size={}, sortBy={}, direction={}", page, size, sortBy, direction);
+        logger.info("Fetching paged courses page={}, size={}, sortBy={}, direction={}", page, size, sortBy, direction);
 
         Sort sort = direction.equalsIgnoreCase("desc")
                 ? Sort.by(sortBy).descending()
@@ -77,35 +76,71 @@ public class CourseService {
         logger.info("Fetching course by id={}", id);
 
         Course course = courseRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Course not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found with id: " + id));
             
         return toResponse(course);
     }
 
     public CourseResponse createCourse(CreateCourseRequest request) {
-        String courseCode = request.getCourseCode().trim();
+        logger.info("Creating course with code={}", request.getCourseCode());
+
+        String courseCode = safeTrim(request.getCourseCode());
 
         if (courseRepository.existsByCourseCode(courseCode)) {
-            throw new DuplicateResourseException("Course code already exist: " + courseCode);
+            throw new DuplicateResourseException("Course code already exists: " + courseCode);
         }
 
-        // Map DTO Request to Course Entity using constructor
+        String level = safeTrim(request.getLevel());
+        if (hasValue(level)) {
+            validateLevel(level);
+        }
+
         Course course = new Course(
-            request.getCourseCode().trim(),
-            request.getTitle().trim(),
-            request.getDescription().trim(),
-            request.getCategory().trim(),
-            request.getLevel().trim(),
-            request.getCapacity().trim(),
-            "ACTIVE", // Backend sets default status
-            (request.getCreatedAt() != null && !request.getCreatedAt().isBlank()) 
-                ? request.getCreatedAt().trim()
-                : LocalDate.now().toString()
+            courseCode,
+            safeTrim(request.getTitle()),
+            safeTrim(request.getDescription()),
+            safeTrim(request.getCategory()),
+            level,
+            safeTrim(request.getCapacity()),
+            "ACTIVE", // Default status
+            hasValue(request.getCreatedAt()) ? request.getCreatedAt().trim() : LocalDate.now().toString()
         );
 
-        // Save entity to MongoDB
         Course savedCourse = courseRepository.save(course);
+        return toResponse(savedCourse);
+    }
 
+    public CourseResponse updateCourse(String id, UpdateCourseRequest request) {
+        logger.info("Updating course id={}", id);
+
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found with id: " + id));
+
+        String courseCode = safeTrim(request.getCourseCode());
+        String status = safeTrim(request.getStatus()).toUpperCase();
+        String level = safeTrim(request.getLevel());
+
+        validateStatus(status);
+        validateLevel(level);
+
+        // Check if updating to a course code that belongs to another entity
+        if (!course.getCourseCode().equalsIgnoreCase(courseCode) && courseRepository.existsByCourseCode(courseCode)) {
+            throw new DuplicateResourseException("Course code already exists: " + courseCode);
+        }
+
+        course.setCourseCode(courseCode);
+        course.setTitle(safeTrim(request.getTitle()));
+        course.setDescription(safeTrim(request.getDescription()));
+        course.setCategory(safeTrim(request.getCategory()));
+        course.setLevel(level);
+        course.setCapacity(safeTrim(request.getCapacity()));
+        course.setStatus(status);
+        
+        if (hasValue(request.getCreatedAt())) {
+            course.setCreatedAt(request.getCreatedAt().trim());
+        }
+
+        Course savedCourse = courseRepository.save(course);
         return toResponse(savedCourse);
     }
 
@@ -124,8 +159,24 @@ public class CourseService {
         );
     }
 
-    // Helper method to check if string parameter is non-null and not empty
+    // Helper methods
     private boolean hasValue(String str) {
         return str != null && !str.trim().isEmpty();
+    }
+
+    private String safeTrim(String str) {
+        return str == null ? "" : str.trim();
+    }
+
+    private void validateStatus(String status) {
+        if (!ALLOWED_STATUS.contains(status)) {
+            throw new InvalidRequestException("Status must be ACTIVE or INACTIVE");
+        }
+    }
+
+    private void validateLevel(String level) {
+        if (!ALLOWED_LEVEL.contains(level)) {
+            throw new InvalidRequestException("Level must be Beginner, Intermediate, or Advanced");
+        }
     }
 }

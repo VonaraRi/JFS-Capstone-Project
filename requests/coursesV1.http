@@ -1,7 +1,7 @@
 ### ====== Api Quality, Versioning, Docs and Reports ======
 
 @baseUrl= http://localhost:8000
-@adminToken= eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJBRE1JTiIsImlzcyI6ImNvdXJzZS1lbnJvbG1lbnQtYXBpIiwibmFtZSI6IkFkbWluIFVzZXIiLCJleHAiOjE3ODcwNDI2ODYsImlhdCI6MTc4NzAzOTA4NiwidXNlcklkIjoiNmE4MzNjYWJjYTRjODA1NmYxZjI5MThlIn0.FpNrEz5NbikdlvhKs9aZP0qmw3GNvrOUHE9kv6N5GS4
+@adminToken= eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJBRE1JTiIsImlzcyI6ImNvdXJzZS1lbnJvbG1lbnQtYXBpIiwibmFtZSI6IkFkbWluIFVzZXIiLCJleHAiOjE3ODcxNjI4NTksImlhdCI6MTc4NzE1OTI1OSwidXNlcklkIjoiNmE4MzNjYWJjYTRjODA1NmYxZjI5MThlIn0.uj3BPH0llr7EOEU6QQTqRkAKLgKCmitjG8F41oKQ76M
 
 ### Public class check
 GET {{baseUrl}}/api/class
@@ -58,4 +58,19 @@ Authorization: Bearer {{adminToken}}
 ### Course report by status
 GET {{baseUrl}}/api/v1/reports/courses-by-status
 Authorization: Bearer {{adminToken}}
+
+### Update course from frontend form
+PUT {{baseUrl}}/api/v1/courses/6a84020f8a87acc00195a093
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+    "courseCode": "PL101",
+    "title": "C++ Programming",
+    "description": "An introductory course on C++ programming.",
+    "category": "Programming",
+    "level" : "Advanced",
+    "capacity": "FULL",
+    "status" : "ACTIVE"
+}
 

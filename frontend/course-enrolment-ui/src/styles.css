@@ -14,7 +14,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -168,7 +169,7 @@ h1 {
 .card,
 .filter-panel,
 .empty-state {
-  padding: 20px;
+  padding: 24px;
 }
 
 .section-heading {
@@ -197,31 +198,46 @@ h1 {
 .action-row {
   display: flex;
   gap: 12px;
+  align-items: center;
 }
 
-.button-link {
-  display: inline-block;
+.button-link,
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   background: #be185d;
   color: #ffffff;
   padding: 10px 20px;
   border-radius: 12px;
   font-weight: 700;
+  border: none;
   transition: background 0.2s;
+  cursor: pointer;
 }
 
-.button-link:hover {
+.button-link:hover,
+.button-primary:hover {
   background: #831843;
 }
 
-.button-link.secondary {
+.button-link.secondary,
+.button-secondary {
   background: #fce7f3;
   color: #831843;
   border: 1px solid #fbcfe8;
 }
 
-.button-link.secondary:hover {
+.button-link.secondary:hover,
+.button-secondary:hover {
   background: #fbcfe8;
+}
+
+.button-primary:disabled,
+.button-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* API Info Cards */
@@ -258,25 +274,34 @@ h1 {
 }
 
 label {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
   color: #701a3c;
   font-weight: 700;
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
   border: 1px solid #f472b6;
   border-radius: 12px;
-  padding: 12px;
+  padding: 12px 14px;
   background: #fff5f8;
   color: #3d1c28;
   outline-color: #ec4899;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   border-color: #db2777;
   box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.2);
 }
@@ -406,6 +431,65 @@ dd {
   color: #3d1c28;
 }
 
+/* ==========================================================================
+   Course Wizard & Step Indicators
+   ========================================================================== */
+
+.wizard-card {
+  margin-top: 20px;
+}
+
+/* Step Indicator Bar Formatting */
+ol.step-indicator,
+ul.step-indicator,
+.step-indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none; /* Strip standard ordered list numbers */
+  padding: 0;
+  margin: 0 0 24px 0;
+  border-bottom: 2px solid #fce7f3;
+  padding-bottom: 16px;
+  gap: 12px;
+}
+
+.step-indicator li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #9d4c6c;
+}
+
+.step-indicator li.active,
+.step-indicator li.completed {
+  color: #be185d;
+}
+
+/* Step Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.form-grid.full-width,
+.form-grid-full {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #fce7f3;
+}
+
 /* Reports Page */
 .report-grid {
   display: grid;
@@ -431,7 +515,7 @@ dd {
   color: #be185d;
 }
 
-/* Login Page - Full Desktop Width & Centered Content */
+/* Login Page */
 .login-page {
   width: min(1180px, calc(100% - 32px));
   margin: 40px auto;
@@ -444,7 +528,6 @@ dd {
   border: 1px solid #fbcfe8;
   box-shadow: 0 12px 35px rgba(190, 24, 93, 0.07);
   width: 100%;
-  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -539,6 +622,12 @@ dd {
   color: #9f1239;
 }
 
+.success-message {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
 .empty-state {
   color: #9d4c6c;
 }
@@ -551,7 +640,8 @@ dd {
   .summary-grid,
   .api-info-grid,
   .report-grid,
-  .welcome-card {
+  .welcome-card,
+  .form-grid {
     grid-template-columns: 1fr;
     display: grid;
   }

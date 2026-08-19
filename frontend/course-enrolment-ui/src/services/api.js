@@ -1,65 +1,65 @@
-async function parseJsonResponse(response) {
-  const contentType = response.headers.get('content-type') ?? '';
-  const body = contentType.includes('application/json') ? await response.json() : null;
-
-  if (!response.ok) {
-    const message = body?.message || `Request failed with status ${response.status}`;
-    throw new Error(message);
-  }
-
-  return body;
-}
+import { apiRequest, buildQueryString } from './httpClient.js';
 
 export async function fetchApiInfo() {
-  const response = await fetch('/api/v1/info');
-  return parseJsonResponse(response);
+  return apiRequest('/api/v1/info');
 }
 
 export async function fetchApiDocs() {
-  const response = await fetch('/api/docs');
-  return parseJsonResponse(response);
+  return apiRequest('/api/docs');
 }
 
 export async function loginRequest(email, password) {
-  const response = await fetch('/api/auth/login', {
+  return apiRequest('/api/auth/login', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ email, password })
+    body: { email, password }
   });
-
-  return parseJsonResponse(response);
 }
 
 export async function fetchCourses(token) {
-  const response = await fetch('/api/v1/courses', {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
+  return apiRequest('/api/v1/courses', { token });
+}
+
+export async function fetchPagedCourses(token, params) {
+  const queryString = buildQueryString({
+    page: params.page,
+    size: params.size,
+    sortBy: params.sortBy,
+    direction: params.direction
   });
 
-  return parseJsonResponse(response);
+  return apiRequest(`/api/v1/courses/paged${queryString}`, { token });
+}
+
+export async function fetchCourseById(id, token) {
+  return apiRequest(`/api/v1/courses/${id}`, { token });
+}
+
+export async function createCourse(token, payload) {
+  return apiRequest('/api/v1/courses', {
+    method: 'POST',
+    token,
+    body: payload
+  });
+}
+
+export async function updateCourse(id, token, payload) {
+  return apiRequest(`/api/v1/courses/${id}`, {
+    method: 'PUT',
+    token,
+    body: payload
+  });
 }
 
 export async function fetchReport(path, token) {
-  const response = await fetch(path, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-
-  return parseJsonResponse(response);
+  return apiRequest(path, { token });
 }
 
 export async function fetchCourseReports(token) {
-  // Added 'byCapacity' to the array destructuring assignment
-  const [byStatus, byLevel, byCategory, byCapacity] = await Promise.all([
+  const [byStatus, byCategory, byLevel] = await Promise.all([
     fetchReport('/api/v1/reports/courses-by-status', token),
-    fetchReport('/api/v1/reports/courses-by-level', token),
     fetchReport('/api/v1/reports/courses-by-category', token),
-    fetchReport('/api/v1/reports/courses-by-capacity', token)
+    fetchReport('/api/v1/reports/courses-by-level', token)
   ]);
 
-  return { byStatus, byLevel, byCategory, byCapacity };
+  return { byStatus, byCategory, byLevel };
 }

@@ -1,101 +1,96 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { Link } from 'react-router';
 import CourseDetail from '../components/CourseDetail.jsx';
 import CourseList from '../components/CourseList.jsx';
+import DataControls from '../components/DataControls.jsx';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 import FilterPanel from '../components/FilterPanel.jsx';
 import LoadingMessage from '../components/LoadingMessage.jsx';
+import OptimisticStatusControls from '../components/OptimisticStatusControls.jsx';
+import PaginationControls from '../components/PaginationControls.jsx';
 import SummaryCards from '../components/SummaryCards.jsx';
-import { useAuth } from '../context/AuthContext.jsx';
-import { fetchCourses } from '../services/api.js';
-import { filterCourses } from '../utils/courses.js';
+import { useCourseData } from '../context/CourseDataContext.jsx';
 
 export default function CoursesPage() {
-  const { token } = useAuth();
-  const [courses, setCourses] = useState([]);
-  const [selectedCourse, setSelectedCourse] = useState(null);
-  const [searchText, setSearchText] = useState('');
-  const [statusFilter, setStatusFilter] = useState('ALL');
-  const [levelFilter, setLevelFilter] = useState('ALL');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const initialLoadRef = useRef(false);
 
-  const filteredCourses = useMemo(
-    () => filterCourses(courses, searchText, statusFilter, levelFilter),
-    [courses, searchText, statusFilter, levelFilter]
-  );
-
-  useEffect(() => {
-    let ignore = false;
-
-    async function loadCourses() {
-      try {
-        setLoading(true);
-        setError('');
-        const data = await fetchCourses(token);
-
-        if (!ignore) {
-          setCourses(data);
-          setSelectedCourse(data[0] ?? null);
-        }
-      } catch (err) {
-        if (!ignore) {
-          setError(err.message || 'Could not load protected course data.');
-          console.error(err);
-        }
-      } finally {
-        if (!ignore) {
-          setLoading(false);
-        }
-      }
-    }
-
-    loadCourses();
-
-    return () => {
-      ignore = true;
-    };
-  }, [token]);
+  const {
+    items,
+    visibleCourses,
+    selectedCourse,
+    selectedCourseId,
+    loading,
+    error,
+    pageInfo,
+    filters,
+    cacheMessage,
+    updatingId,
+    loadCoursesPage,
+    refreshCourses,
+    setSearchText,
+    setStatusFilter,
+    selectCourse,
+    changeCourseStatus
+  } = useCourseData();
 
   useEffect(() => {
-    if (filteredCourses.length === 0) {
-      setSelectedCourse(null);
+    if (initialLoadRef.current) {
       return;
     }
 
-    const selectedStillVisible = filteredCourses.some((course) => course.id === selectedCourse?.id);
-
-    if (!selectedStillVisible) {
-      setSelectedCourse(filteredCourses[0]);
-    }
-  }, [filteredCourses, selectedCourse]);
-
-  if (loading) {
-    return <LoadingMessage message="Loading protected courses..." />;
-  }
-
-  if (error) {
-    return <ErrorMessage message={error} />;
-  }
+    initialLoadRef.current = true;
+    loadCoursesPage();
+  }, [loadCoursesPage]);
 
   return (
     <>
-      <SummaryCards courses={courses} />
+      <SummaryCards courses={items} />
+
+      <DataControls
+        pageInfo={pageInfo}
+        cacheMessage={cacheMessage}
+        loading={loading}
+        onRefresh={refreshCourses}
+        onPageSizeChange={(size) => loadCoursesPage({ page: 0, size })}
+        onSortChange={(sortBy, direction) => loadCoursesPage({ page: 0, sortBy: "courseCode", direction })}
+      />
+
       <FilterPanel
-        searchText={searchText}
-        statusFilter={statusFilter}
-        levelFilter={levelFilter}
+        searchText={filters.searchText}
+        statusFilter={filters.statusFilter}
         onSearchChange={setSearchText}
         onStatusChange={setStatusFilter}
-        onLevelChange={setLevelFilter}
       />
+
+      {loading && <LoadingMessage message="Loading course page..." />}
+      {error && <ErrorMessage message={error} />}
+
       <section className="workspace-grid">
         <CourseList
-          courses={filteredCourses}
-          selectedCourseId={selectedCourse?.id}
-          onSelectCourse={setSelectedCourse}
+          courses={visibleCourses}
+          selectedCourseId={selectedCourseId || selectedCourse?.id}
+          onSelectCourse={(course) => selectCourse(course.id)}
         />
-        <CourseDetail course={selectedCourse} />
+        <div className="course-list">
+          <CourseDetail course={selectedCourse} />
+          <OptimisticStatusControls
+            course={selectedCourse}
+            updatingId={updatingId}
+            onStatusChange={changeCourseStatus}
+          />
+          {selectedCourse && (
+            <Link className="button-link secondary" to={`/app/courses/${selectedCourse.id}/edit`}>
+              Edit selected course
+            </Link>
+          )}
+        </div>
       </section>
+
+      <PaginationControls
+        pageInfo={pageInfo}
+        loading={loading}
+        onPageChange={(page) => loadCoursesPage({ page })}
+      />
     </>
   );
 }
