@@ -25,7 +25,11 @@ export default function StudentRegisterCoursePage() {
         fetchMyEnrollments(token)
       ]);
 
-      setCourses(allCoursesData);
+      // Filter out inactive courses so students never see or register for them
+      const activeCourses = (allCoursesData || []).filter(
+        (course) => course.status && course.status.toUpperCase() !== 'INACTIVE'
+      );
+      setCourses(activeCourses);
 
       // Filter only active "ENROLLED" records so dropped courses don't count as enrolled
       const activeEnrolments = (enrolledData || []).filter(

@@ -31,6 +31,11 @@ public class EnrolmentService {
         Course course = courseRepository.findById(request.getCourseId())
             .orElseThrow(() -> new ResourceNotFoundException("Course not found with id: " + request.getCourseId()));
 
+        // Check if course is INACTIVE
+        if ("INACTIVE".equalsIgnoreCase(course.getStatus())) {
+            throw new IllegalStateException("Cannot enroll in an inactive course.");
+        }
+
         // 1. Check if an enrolment record already exists (ENROLLED or UNROLLED)
         Enrolment enrolment = enrolmentRepository.findByUserIdAndCourseId(userId, request.getCourseId())
                 .orElse(null);
