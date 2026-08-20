@@ -1,14 +1,17 @@
 package com.example.courseenrolment.dto;
 
+import java.util.List;
+
 public class ReportCountResponse {
     
     private String label;
     private long count;
+    private List<String> studentNames;
 
     public ReportCountResponse() {
     }
 
-    public ReportCountResponse(String label, long count) {
+    public ReportCountResponse(String label, long count, List<String> studentNames) {
         this.label = label;
         this.count = count;
     }
@@ -27,5 +30,13 @@ public class ReportCountResponse {
 
     public void setCount(long count) {
         this.count = count;
+    }
+
+    public List<String> getStudentNames() {
+        return studentNames;
+    }
+
+    public void setStudentNames(List<String> studentNames) {
+        this.studentNames = studentNames;
     }
 }

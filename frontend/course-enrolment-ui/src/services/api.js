@@ -55,14 +55,37 @@ export async function fetchReport(path, token) {
 }
 
 export async function fetchCourseReports(token) {
-  const [byStatus, byCategory, byLevel, byCapacity] = await Promise.all([
+  const [
+    byStatus,
+    byLevel,
+    byCategory,
+    byCapacity,
+    enrolmentsPerCourse,
+    popularCourses,
+    overview,
+    monthlyEnrolments
+  ] = await Promise.all([
     fetchReport('/api/v1/reports/courses-by-status', token),
-    fetchReport('/api/v1/reports/courses-by-category', token),
     fetchReport('/api/v1/reports/courses-by-level', token),
-    fetchReport('/api/v1/reports/courses-by-capacity', token)
+    fetchReport('/api/v1/reports/courses-by-category', token),
+    fetchReport('/api/v1/reports/courses-by-capacity', token),
+    
+    fetchReport('/api/v1/reports/enrolments-per-course', token),
+    fetchReport('/api/v1/reports/popular-courses', token),
+    fetchReport('/api/v1/reports/enrolments-overview', token),
+    fetchReport('/api/v1/reports/monthly-enrolments', token)
   ]);
 
-  return { byStatus, byCategory, byLevel, byCapacity };
+  return {
+    byStatus,
+    byLevel,
+    byCategory,
+    byCapacity,
+    enrolmentsPerCourse,
+    popularCourses,
+    overview,
+    monthlyEnrolments
+  };
 }
 
 export async function enrollCourse(courseId, token) {

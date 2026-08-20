@@ -859,3 +859,256 @@ ul.step-indicator,
 .button-secondary:hover {
   background-color: #be185d; /* Lighter highlight on hover */
 }
+
+/* Table Layout for EnrolmentsPerCourseCard */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 12px;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.report-table thead tr {
+  background-color: rgba(128, 0, 32, 0.05); /* Soft background for header */
+  border-bottom: 2px solid rgba(128, 0, 32, 0.1);
+}
+
+.report-table th {
+  padding: 10px 14px;
+  font-weight: 700;
+  color: #500014;
+}
+
+.report-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+}
+
+.report-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.report-table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.015);
+}
+
+.report-table .count-cell {
+  text-align: right;
+  color: #800020;
+}
+
+.report-table .empty-state {
+  text-align: center;
+  color: #888;
+  padding: 16px;
+  font-style: italic;
+}
+
+/* Center-align the header column */
+.report-table th:nth-child(2) {
+  text-align: center;
+}
+
+/* Center-align the student count cells */
+.report-table .count-cell {
+  text-align: center;
+  color: #800020;
+}
+
+/* Table Action Column */
+.report-table th:nth-child(3),
+.report-table .action-cell {
+  text-align: center;
+}
+
+/* View Students Button */
+.btn-view-students {
+  background-color: transparent;
+  color: #800020;
+  border: 1px solid #800020;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-view-students:hover {
+  background-color: #800020;
+  color: #ffffff;
+}
+
+/* Collapsible Student List Styling */
+.student-list-container {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background-color: #fdf6f8;
+  border-left: 3px solid #800020;
+  border-radius: 4px;
+}
+
+.student-list-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #500014;
+  margin-bottom: 6px;
+}
+
+.student-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.88rem;
+  color: #444;
+}
+
+.student-list li {
+  margin-bottom: 3px;
+}
+
+.no-students {
+  font-size: 0.85rem;
+  color: #777;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Card Container */
+.popular-courses-card {
+  grid-column: 1 / -1;
+  padding: 24px;
+}
+
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.popular-card-item {
+  background: #f7faff;
+  border: 1px solid #e2edff;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease;
+}
+
+.popular-card-item:hover {
+  transform: translateY(-4px);
+}
+
+.course-top-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #1a2b49;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+/* Enrolled Badge */
+.pill-badge {
+  background: #007bff;
+  color: #ffffff;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin: 10px 0;
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3);
+}
+
+/* Pillar Styling */
+.visual-pillar-container {
+  height: 140px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.visual-pillar {
+  width: 50%;
+  background: linear-gradient(180deg, #38b6ff 0%, #0056b3 100%);
+  border-radius: 8px 8px 4px 4px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 6px;
+  transition: height 0.4s ease;
+}
+
+.rank-tag {
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+/* Bottom Information */
+.course-bottom-info {
+  margin-top: 8px;
+  border-top: 1px solid #e6eeec;
+  padding-top: 8px;
+  width: 100%;
+}
+
+.course-bottom-info strong {
+  display: block;
+  font-size: 0.85rem;
+  color: #222;
+}
+
+.rating-text {
+  font-size: 0.8rem;
+  color: #e67e22;
+  font-weight: 600;
+}
+
+.overview-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+.overview-table th, 
+.overview-table td {
+  border: 1px solid #dcdcdc;
+  padding: 12px 16px;
+  text-align: center;
+}
+
+.overview-table th {
+  background-color: #f8f9fa;
+  font-weight: 700;
+  color: #333;
+}
+
+.attribute-type-cell {
+  background-color: #ffffff;
+  vertical-align: middle;
+  font-size: 1rem;
+}
+
+.total-courses-row {
+  background-color: #fdf6f8;
+}
+
+.total-courses-value {
+  text-align: center;
+  color: #800020;
+}

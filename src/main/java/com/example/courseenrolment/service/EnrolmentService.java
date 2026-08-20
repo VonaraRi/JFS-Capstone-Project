@@ -29,21 +29,34 @@ public class EnrolmentService {
 
     public EnrolmentResponse enrollStudent(String userId, EnrolmentRequest request) {
         Course course = courseRepository.findById(request.getCourseId())
-                .orElseThrow(() -> new ResourceNotFoundException("Course not found with id: " + request.getCourseId()));
+            .orElseThrow(() -> new ResourceNotFoundException("Course not found with id: " + request.getCourseId()));
 
-        boolean alreadyEnrolled = enrolmentRepository.existsByUserIdAndCourseIdAndStatus(userId, request.getCourseId(), "ENROLLED");
-        if (alreadyEnrolled) {
+        // 1. Check if an enrolment record already exists (ENROLLED or UNROLLED)
+        Enrolment enrolment = enrolmentRepository.findByUserIdAndCourseId(userId, request.getCourseId())
+                .orElse(null);
+
+        // 2. Prevent double active enrolments
+        if (enrolment != null && "ENROLLED".equalsIgnoreCase(enrolment.getStatus())) {
             throw new DuplicateResourseException("You are already enrolled in this course.");
         }
 
+        // 3. Validate capacity limit
         long activeEnrolmentsCount = enrolmentRepository.countByCourseIdAndStatus(request.getCourseId(), "ENROLLED");
         if ("FULL".equalsIgnoreCase(course.getCapacity()) || activeEnrolmentsCount >= extractCapacityNumber(course.getCapacity())) {
             throw new IllegalStateException("Course has reached maximum capacity.");
         }
 
-        Enrolment enrolment = new Enrolment(userId, course.getId());
-        Enrolment savedEnrolment = enrolmentRepository.save(enrolment);
+        // 4. Update existing document if previously UNROLLED, or create a new one if first time
+        if (enrolment != null) {
+            enrolment.setStatus("ENROLLED");
+            enrolment.setEnrolmentDate(java.time.Instant.now()); // Refreshes timestamp as Instant
+        } else {
+            enrolment = new Enrolment(userId, course.getId());
+            enrolment.setStatus("ENROLLED");
+            enrolment.setEnrolmentDate(java.time.Instant.now());
+        }
 
+        Enrolment savedEnrolment = enrolmentRepository.save(enrolment);
         AppUser user = appUserRepository.findById(userId).orElse(null);
 
         return mapToResponse(savedEnrolment, course, user);

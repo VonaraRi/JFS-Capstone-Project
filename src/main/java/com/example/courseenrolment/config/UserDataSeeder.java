@@ -33,7 +33,7 @@ public class UserDataSeeder {
                     "ADMIN"
             );
 
-            // Seed Regular Student Account
+            // Seed Default Student Account
             createUserIfMissing(
                     userRepository,
                     passwordEncoder,
@@ -42,6 +42,18 @@ public class UserDataSeeder {
                     "Student@12345",
                     "STUDENT"
             );
+
+            // --- Seed 10 Student Accounts ---
+            createUserIfMissing(userRepository, passwordEncoder, "Jason Lee", "jason.lee@example.com", "Student@12345", "STUDENT");
+            createUserIfMissing(userRepository, passwordEncoder, "Alice Smith", "alice.smith@example.com", "Student@12345", "STUDENT");
+            createUserIfMissing(userRepository, passwordEncoder, "Bob Tan", "bob.tan@example.com", "Student@12345", "STUDENT");
+            createUserIfMissing(userRepository, passwordEncoder, "Catherine Wong", "catherine.wong@example.com", "Student@12345", "STUDENT");
+            createUserIfMissing(userRepository, passwordEncoder, "David Miller", "david.miller@example.com", "Student@12345", "STUDENT");
+            createUserIfMissing(userRepository, passwordEncoder, "Emma Watson", "emma.watson@example.com", "Student@12345", "STUDENT");
+            createUserIfMissing(userRepository, passwordEncoder, "Fiona Chen", "fiona.chen@example.com", "Student@12345", "STUDENT");
+            createUserIfMissing(userRepository, passwordEncoder, "George Ibrahim", "george.ibrahim@example.com", "Student@12345", "STUDENT");
+            createUserIfMissing(userRepository, passwordEncoder, "Hannah Taylor", "hannah.taylor@example.com", "Student@12345", "STUDENT");
+            createUserIfMissing(userRepository, passwordEncoder, "Ian Wright", "ian.wright@example.com", "Student@12345", "STUDENT");
         };
     }
 

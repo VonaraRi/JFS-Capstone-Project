@@ -1,8 +1,7 @@
 ### ====== Api Quality, Versioning, Docs and Reports ======
 
 @baseUrl= http://localhost:8000
-@adminToken= eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJBRE1JTiIsImlzcyI6ImNvdXJzZS1lbnJvbG1lbnQtYXBpIiwibmFtZSI6IkFkbWluIFVzZXIiLCJleHAiOjE3ODcxNjI4NTksImlhdCI6MTc4NzE1OTI1OSwidXNlcklkIjoiNmE4MzNjYWJjYTRjODA1NmYxZjI5MThlIn0.uj3BPH0llr7EOEU6QQTqRkAKLgKCmitjG8F41oKQ76M
-
+@adminToken= eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJBRE1JTiIsImlzcyI6ImNvdXJzZS1lbnJvbG1lbnQtYXBpIiwibmFtZSI6IkFkbWluIFVzZXIiLCJleHAiOjE3ODcyNTgyOTMsImlhdCI6MTc4NzI1NDY5MywidXNlcklkIjoiNmE4MzNjYWJjYTRjODA1NmYxZjI5MThlIn0.W4FjNhBJvR2526Gu3Eymx_W2OywafkHdanWHs1C3aQI
 ### Public class check
 GET {{baseUrl}}/api/class
 
@@ -74,3 +73,18 @@ Authorization: Bearer {{adminToken}}
     "status" : "ACTIVE"
 }
 
+### Enrolments per course report
+GET {{baseUrl}}/api/v1/reports/enrolments-per-course
+Authorization: Bearer {{adminToken}}
+
+### Most popular courses report
+GET {{baseUrl}}/api/v1/reports/popular-courses
+Authorization: Bearer {{adminToken}}
+
+### Enrolments by level report
+GET {{baseUrl}}/api/v1/reports/enrolments-overview
+Authorization: Bearer {{adminToken}}
+
+### Monthly enrolment totals report
+GET {{baseUrl}}/api/v1/reports/monthly-enrolments
+Authorization: Bearer {{adminToken}}
