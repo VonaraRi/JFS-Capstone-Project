@@ -11,6 +11,12 @@ import { CourseDataProvider } from './context/CourseDataContext.jsx';
 const CourseFormPage = lazy(() => import('./pages/CourseFormPage.jsx'));
 const ReportsPage = lazy(() => import('./pages/ReportsPage.jsx'));
 const DocsPage = lazy(() => import('./pages/DocsPage.jsx'));
+
+// Student Pages
+const StudentDashboardPage = lazy(() => import('./pages/StudentDashboardPage.jsx'));
+const StudentProfilePage = lazy(() => import('./pages/StudentProfilePage.jsx'));
+const StudentRegisterCoursePage = lazy(() => import('./pages/StudentRegisterCoursePage.jsx'));
+
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage.jsx'));
 
 function withFallback(element) {
@@ -36,6 +42,13 @@ export default function App() {
       >
         <Route index element={<Navigate to="dashboard" replace />} />
         <Route path="dashboard" element={<DashboardPage />} />
+        
+        {/* Student Routes */}
+        <Route path="student-dashboard" element={withFallback(<StudentDashboardPage />)} />
+        <Route path="student-profile" element={withFallback(<StudentProfilePage />)} />
+        <Route path="register-course" element={withFallback(<StudentRegisterCoursePage />)} />
+
+        {/* Admin Routes */}
         <Route path="courses" element={<CoursesPage />} />
         <Route path="courses/new" element={withFallback(<CourseFormPage />)} />
         <Route path="courses/:courseId/edit" element={withFallback(<CourseFormPage />)} />

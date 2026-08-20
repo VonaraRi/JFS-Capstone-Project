@@ -53,7 +53,9 @@ public class EnrolmentService {
         List<Enrolment> enrolments = enrolmentRepository.findByUserId(userId);
         AppUser user = appUserRepository.findById(userId).orElse(null);
 
-        return enrolments.stream().map(enrolment -> {
+        return enrolments.stream()
+            .filter(enrolment -> "ENROLLED".equalsIgnoreCase(enrolment.getStatus()))
+            .map(enrolment -> {
             Course course = courseRepository.findById(enrolment.getCourseId()).orElse(null);
             return mapToResponse(enrolment, course, user);
         }).toList();
@@ -67,7 +69,7 @@ public class EnrolmentService {
             throw new IllegalStateException("You are not authorized to drop this enrolment.");
         }
 
-        enrolment.setStatus("DROPPED");
+        enrolment.setStatus("UNROLLED");
         enrolmentRepository.save(enrolment);
     }
 

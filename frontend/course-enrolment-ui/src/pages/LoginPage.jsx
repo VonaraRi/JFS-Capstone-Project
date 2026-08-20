@@ -5,7 +5,7 @@ import LoadingMessage from '../components/LoadingMessage.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 
 export default function LoginPage() {
-  const { isAuthenticated, login } = useAuth();
+  const { user, isAuthenticated, login } = useAuth();
   const [email, setEmail] = useState('admin@example.com');
   const [password, setPassword] = useState('Admin@12345');
   const [loading, setLoading] = useState(false);
@@ -13,10 +13,10 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const redirectTo = location.state?.from?.pathname || '/app/dashboard';
-
+  // Redirect authenticated users based on their role
   if (isAuthenticated) {
-    return <Navigate to="/app/dashboard" replace />;
+    const targetPath = user?.role === 'STUDENT' ? '/app/student-dashboard' : '/app/dashboard';
+    return <Navigate to={targetPath} replace />;
   }
 
   async function handleSubmit(event) {
@@ -25,13 +25,24 @@ export default function LoginPage() {
     setError('');
 
     try {
-      await login(email, password);
-      navigate(redirectTo, { replace: true });
+      const loggedInUser = await login(email, password);
+      
+      // Determine destination: respect redirected route if present, otherwise check role
+      const defaultPath = loggedInUser?.role === 'STUDENT' ? '/app/student-dashboard' : '/app/dashboard';
+      const destination = location.state?.from?.pathname || defaultPath;
+
+      navigate(destination, { replace: true });
     } catch (err) {
       setError(err.message || 'Login failed. Check the backend and credentials.');
     } finally {
       setLoading(false);
     }
+  }
+
+  // Preset filler for quick testing
+  function handleFillCredentials(presetEmail, presetPassword) {
+    setEmail(presetEmail);
+    setPassword(presetPassword);
   }
 
   return (
@@ -40,7 +51,7 @@ export default function LoginPage() {
         <p className="eyebrow">Capstone Project</p>
         <h1>Login to Course Enrolment System</h1>
         <p>
-          Authenticate with your credentials to access protected course data and administrative options.
+          Authenticate with your credentials to access your dashboard.
         </p>
 
         <form onSubmit={handleSubmit} className="login-form">
@@ -75,9 +86,23 @@ export default function LoginPage() {
         </form>
 
         <div className="login-help">
-          <strong>Seeded Admin Credentials</strong>
-          <span>email: admin@example.com</span>
-          <span>password: Admin@12345</span>
+          <strong>Seeded Test Credentials</strong>
+          <div className="preset-buttons">
+            <button
+              type="button"
+              className="button-secondary preset-btn"
+              onClick={() => handleFillCredentials('admin@example.com', 'Admin@12345')}
+            >
+              Fill Admin
+            </button>
+            <button
+              type="button"
+              className="button-secondary preset-btn"
+              onClick={() => handleFillCredentials('student@example.com', 'Student@12345')}
+            >
+              Fill Student
+            </button>
+          </div>
         </div>
       </section>
     </main>

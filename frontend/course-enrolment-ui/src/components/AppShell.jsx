@@ -10,6 +10,8 @@ export default function AppShell() {
     navigate('/login', { replace: true });
   }
 
+  const isStudent = user?.role === 'STUDENT';
+
   return (
     <div className="app-shell">
       <header className="app-header">
@@ -21,18 +23,29 @@ export default function AppShell() {
           </p>
         </div>
         <div className="user-panel">
-          <span>{user?.name}</span>
+          <span>{user?.name || user?.email}</span>
           <strong>{user?.role}</strong>
           <button type="button" onClick={handleLogout}>Logout</button>
         </div>
       </header>
 
       <nav className="app-nav" aria-label="Main navigation">
-        <NavLink to="/app/dashboard">Dashboard</NavLink>
-        <NavLink to="/app/courses">Courses</NavLink>
-        <NavLink to="/app/courses/new">Courses Form</NavLink>
-        <NavLink to="/app/reports">Reports</NavLink>
-        <NavLink to="/docs">API Docs</NavLink>
+        {isStudent ? (
+          <>
+            <NavLink to="/app/student-dashboard">Dashboard</NavLink>
+            <NavLink to="/app/student-profile">Profile</NavLink>
+            <NavLink to="/app/register-course">Register Courses</NavLink>
+            <NavLink to="/docs">API Docs</NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink to="/app/dashboard">Dashboard</NavLink>
+            <NavLink to="/app/courses">Courses</NavLink>
+            <NavLink to="/app/courses/new">Courses Form</NavLink>
+            <NavLink to="/app/reports">Reports</NavLink>
+            <NavLink to="/docs">API Docs</NavLink>
+          </>
+        )}
       </nav>
 
       <main>

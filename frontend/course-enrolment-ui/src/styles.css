@@ -650,3 +650,212 @@ ul.step-indicator,
     flex-wrap: wrap;
   }
 }
+
+.preset-buttons {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.preset-btn {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+}
+
+.page-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.status-badge.status-enrolled {
+  background-color: #fce7f3;
+  color: #9d174d;
+  border: 1px solid #fbcfe8;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.status-badge.status-full {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.unenroll-btn {
+  background-color: #fce7f3;
+  color: #831843;
+  border: 1px solid #fbcfe8;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.unenroll-btn:hover {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+}
+
+/* Layout & Grid Container */
+.profile-container {
+  display: grid;
+  gap: 20px;
+}
+
+/* User Profile Section */
+.welcome-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.user-details h2 {
+  margin: 4px 0 12px 0;
+}
+
+.user-details p {
+  margin: 4px 0;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+/* Course Row Styling */
+.course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.course-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: #fff5f8;
+  border: 1px solid #fbcfe8;
+}
+
+.course-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.course-title {
+  font-size: 1rem;
+  color: #831843;
+}
+
+.course-code {
+  font-size: 0.875rem;
+  color: #9d174d;
+  opacity: 0.85;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-active {
+  background-color: #fbcfe8;
+  color: #831843;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 24px;
+  opacity: 0.7;
+}
+
+/* Container Layout */
+.dashboard-container {
+  display: grid;
+  gap: 20px;
+}
+
+/* Welcome Card Layout */
+.welcome-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.welcome-info h2 {
+  margin: 4px 0 8px 0;
+}
+
+.welcome-info p {
+  margin: 0;
+}
+
+/* Quick Actions Container */
+.quick-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+/* Primary Action Button (View Profile) */
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #9d174d;;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.button-primary:hover {
+  background-color: #be185d;
+}
+
+/* Secondary Action Button (Browse & Register) */
+/* Secondary Action Button - Match primary hue, slightly lighter solid shade */
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #9d174d; /* Slightly lighter shade of the primary maroon (#831843) */
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.button-secondary:hover {
+  background-color: #be185d; /* Lighter highlight on hover */
+}

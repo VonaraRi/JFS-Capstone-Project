@@ -13,7 +13,7 @@ public class Enrolment {
     private String userId;   // References the _id in the 'users' collection
     private String courseId; // References the _id in the 'courses' collection
     private Instant enrolmentDate;
-    private String status;   // "ENROLLED", "DROPPED", "COMPLETED"
+    private String status;   // "ENROLLED", "UNROLLED"
 
     public Enrolment() {
         this.enrolmentDate = Instant.now();

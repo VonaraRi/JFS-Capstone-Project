@@ -55,11 +55,32 @@ export async function fetchReport(path, token) {
 }
 
 export async function fetchCourseReports(token) {
-  const [byStatus, byCategory, byLevel] = await Promise.all([
+  const [byStatus, byCategory, byLevel, byCapacity] = await Promise.all([
     fetchReport('/api/v1/reports/courses-by-status', token),
     fetchReport('/api/v1/reports/courses-by-category', token),
-    fetchReport('/api/v1/reports/courses-by-level', token)
+    fetchReport('/api/v1/reports/courses-by-level', token),
+    fetchReport('/api/v1/reports/courses-by-capacity', token)
   ]);
 
-  return { byStatus, byCategory, byLevel };
+  return { byStatus, byCategory, byLevel, byCapacity };
+}
+
+export async function enrollCourse(courseId, token) {
+  return apiRequest('/api/v1/enrolments', {
+    method: 'POST',
+    token,
+    body: { courseId }
+  });
+}
+
+// Calls your backend drop endpoint using the enrolment ID
+export async function dropEnrolment(enrolmentId, token) {
+  return apiRequest(`/api/v1/enrolments/${enrolmentId}/drop`, {
+    method: 'PUT',
+    token
+  });
+}
+
+export async function fetchMyEnrollments(token) {
+  return apiRequest('/api/v1/enrolments/my-courses', { token });
 }

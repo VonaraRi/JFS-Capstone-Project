@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("/api/v1/enrolments")
 public class EnrolmentV1Controller {
 
-    // Constructor injection is recommended way to get dependencies in Spring
     private final EnrolmentService enrolmentService;
 
     public EnrolmentV1Controller(EnrolmentService enrolmentService) {
@@ -40,6 +39,17 @@ public class EnrolmentV1Controller {
     public List<EnrolmentResponse> getMyEnrolments(@AuthenticationPrincipal Jwt jwt) {
         String userId = extractUserId(jwt);
         return enrolmentService.getMyEnrolments(userId);
+    }
+
+    // PUT /api/v1/enrolments/{enrolmentId}/drop -> Drop/Unenroll from a course
+    @PutMapping("/{enrolmentId}/drop")
+    public ResponseEntity<Void> dropEnrolment(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable String enrolmentId) {
+
+        String userId = extractUserId(jwt);
+        enrolmentService.dropEnrolment(userId, enrolmentId);
+        return ResponseEntity.noContent().build();
     }
 
     // Helper method to retrieve userId claim from JWT token
