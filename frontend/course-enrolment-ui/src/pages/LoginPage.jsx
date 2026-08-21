@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 import LoadingMessage from '../components/LoadingMessage.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
@@ -103,6 +103,14 @@ export default function LoginPage() {
               Fill Student
             </button>
           </div>
+        </div>
+
+        {/* Register link container */}
+        <div className="login-register-prompt" style={{ marginTop: '20px', textAlign: 'center' }}>
+          <span>Don't have an account? </span>
+          <Link to="/register" style={{ color: '#800020', fontWeight: 'bold', textDecoration: 'none' }}>
+            Register account
+          </Link>
         </div>
       </section>
     </main>

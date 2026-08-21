@@ -10,7 +10,6 @@ public class CreateCourseRequest {
     @NotBlank(message = "Title is required")
     private String title;
 
-    @NotBlank(message = "Description is required")
     private String description;
 
     @NotBlank(message = "Category is required")
@@ -21,8 +20,6 @@ public class CreateCourseRequest {
 
     @NotBlank(message = "Capacity is required")
     private String capacity;
-
-    private String createdAt;
 
     public String getCourseCode() {
         return courseCode;
@@ -72,11 +69,4 @@ public class CreateCourseRequest {
         this.capacity = capacity;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
 }

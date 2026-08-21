@@ -10,7 +10,6 @@ public class UpdateCourseRequest {
     @NotBlank(message = "Title is required")
     private String title;
 
-    @NotBlank(message = "Description is required")
     private String description;
 
     @NotBlank(message = "Category is required")

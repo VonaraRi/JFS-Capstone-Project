@@ -11,6 +11,7 @@ import { CourseDataProvider } from './context/CourseDataContext.jsx';
 const CourseFormPage = lazy(() => import('./pages/CourseFormPage.jsx'));
 const ReportsPage = lazy(() => import('./pages/ReportsPage.jsx'));
 const DocsPage = lazy(() => import('./pages/DocsPage.jsx'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage.jsx'));
 
 // Student Pages
 const StudentDashboardPage = lazy(() => import('./pages/StudentDashboardPage.jsx'));
@@ -28,6 +29,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Navigate to="/app/dashboard" replace />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={withFallback(<RegisterPage />)} />
       <Route path="/docs" element={withFallback(<DocsPage />)} />
 
       <Route

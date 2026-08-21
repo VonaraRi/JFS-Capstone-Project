@@ -103,7 +103,7 @@ public class CourseService {
             level,
             safeTrim(request.getCapacity()),
             "ACTIVE", // Default status
-            hasValue(request.getCreatedAt()) ? request.getCreatedAt().trim() : LocalDate.now().toString()
+            LocalDate.now().toString()
         );
 
         Course savedCourse = courseRepository.save(course);

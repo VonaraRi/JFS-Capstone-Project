@@ -1246,3 +1246,159 @@ ul.step-indicator,
   text-align: right;
   margin-top: 1.25rem;
 }
+
+/* Container Layout (Centered on screen) */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #fdf2f4;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Card Styling */
+.register-card {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 460px;
+  padding: 36px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+}
+
+.register-title {
+  color: #5c0a21;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+}
+
+.register-subtitle {
+  color: #666666;
+  font-size: 0.9rem;
+  margin: 0 0 24px 0;
+}
+
+/* Alerts */
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  margin-bottom: 20px;
+}
+
+.alert-error {
+  background-color: #fde8e8;
+  color: #9b1c1c;
+}
+
+.alert-success {
+  background-color: #def7ec;
+  color: #03543f;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.btn-login-now {
+  background-color: #03543f;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+.btn-login-now:hover {
+  background-color: #023e2e;
+}
+
+/* Form Groups */
+.register-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #5c0a21;
+}
+
+.form-group input {
+  padding: 12px 14px;
+  border: 1px solid #f1c2cb;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  background-color: #fdf8f9;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #a81c42;
+}
+
+.disabled-input {
+  background-color: #f5f5f5;
+  color: #777777;
+  cursor: not-allowed;
+  border-color: #e0e0e0;
+}
+
+/* Submit Button Override (High Specificity) */
+.register-container .register-card .submit-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #cd3668;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 8px;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease;
+}
+
+.register-container .register-card .submit-btn:hover {
+  background-color: #96135d;
+}
+
+/* Footer Link */
+.footer-text {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666666;
+}
+
+.footer-link {
+  color: #b81d48;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
