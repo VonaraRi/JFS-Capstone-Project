@@ -45,21 +45,29 @@ public class EnrolmentService {
             throw new DuplicateResourseException("You are already enrolled in this course.");
         }
 
-        // 3. Validate capacity limit
-        long activeEnrolmentsCount = enrolmentRepository.countByCourseIdAndStatus(request.getCourseId(), "ENROLLED");
-        if ("FULL".equalsIgnoreCase(course.getCapacity()) || activeEnrolmentsCount >= extractCapacityNumber(course.getCapacity())) {
+        // 3. Validate capacity limit based on remaining seats
+        int remainingSeats = extractRemainingSeats(course.getCapacity());
+        if (remainingSeats <= 0) {
             throw new IllegalStateException("Course has reached maximum capacity.");
         }
 
         // 4. Update existing document if previously UNROLLED, or create a new one if first time
         if (enrolment != null) {
             enrolment.setStatus("ENROLLED");
-            enrolment.setEnrolmentDate(java.time.Instant.now()); // Refreshes timestamp as Instant
+            enrolment.setEnrolmentDate(java.time.Instant.now());
         } else {
             enrolment = new Enrolment(userId, course.getId());
             enrolment.setStatus("ENROLLED");
             enrolment.setEnrolmentDate(java.time.Instant.now());
         }
+
+        // 5. Decrement available seats count in Course database
+        if (remainingSeats - 1 <= 0) {
+            course.setCapacity("FULL");
+        } else {
+            course.setCapacity((remainingSeats - 1) + " Seats Left");
+        }
+        courseRepository.save(course);
 
         Enrolment savedEnrolment = enrolmentRepository.save(enrolment);
         AppUser user = appUserRepository.findById(userId).orElse(null);
@@ -74,9 +82,9 @@ public class EnrolmentService {
         return enrolments.stream()
             .filter(enrolment -> "ENROLLED".equalsIgnoreCase(enrolment.getStatus()))
             .map(enrolment -> {
-            Course course = courseRepository.findById(enrolment.getCourseId()).orElse(null);
-            return mapToResponse(enrolment, course, user);
-        }).toList();
+                Course course = courseRepository.findById(enrolment.getCourseId()).orElse(null);
+                return mapToResponse(enrolment, course, user);
+            }).toList();
     }
 
     public void dropEnrolment(String userId, String enrolmentId) {
@@ -89,6 +97,14 @@ public class EnrolmentService {
 
         enrolment.setStatus("UNROLLED");
         enrolmentRepository.save(enrolment);
+
+        // Increment capacity string back when dropping
+        Course course = courseRepository.findById(enrolment.getCourseId()).orElse(null);
+        if (course != null) {
+            int remainingSeats = extractRemainingSeats(course.getCapacity());
+            course.setCapacity((remainingSeats + 1) + " Seats Left");
+            courseRepository.save(course);
+        }
     }
 
     private EnrolmentResponse mapToResponse(Enrolment enrolment, Course course, AppUser user) {
@@ -108,7 +124,7 @@ public class EnrolmentService {
         );
     }
 
-    private int extractCapacityNumber(String capacityStr) {
+    private int extractRemainingSeats(String capacityStr) {
         if (capacityStr == null || capacityStr.isBlank() || "FULL".equalsIgnoreCase(capacityStr.trim())) {
             return 0;
         }
