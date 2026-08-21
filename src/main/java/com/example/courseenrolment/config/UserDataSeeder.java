@@ -47,7 +47,7 @@ public class UserDataSeeder {
             createUserIfMissing(userRepository, passwordEncoder, "Jason Lee", "jason.lee@example.com", "Student@12345", "STUDENT");
             createUserIfMissing(userRepository, passwordEncoder, "Alice Smith", "alice.smith@example.com", "Student@12345", "STUDENT");
             createUserIfMissing(userRepository, passwordEncoder, "Bob Tan", "bob.tan@example.com", "Student@12345", "STUDENT");
-            createUserIfMissing(userRepository, passwordEncoder, "Catherine Wong", "catherine.wong@example.com", "Student@12345", "STUDENT");
+            createUserIfMissing(userRepository, passwordEncoder, "Dell Chen", "dell.chen@example.com", "Student@12345", "STUDENT");
             createUserIfMissing(userRepository, passwordEncoder, "David Miller", "david.miller@example.com", "Student@12345", "STUDENT");
             createUserIfMissing(userRepository, passwordEncoder, "Emma Watson", "emma.watson@example.com", "Student@12345", "STUDENT");
             createUserIfMissing(userRepository, passwordEncoder, "Fiona Chen", "fiona.chen@example.com", "Student@12345", "STUDENT");
