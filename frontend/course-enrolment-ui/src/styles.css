@@ -1112,3 +1112,137 @@ ul.step-indicator,
   text-align: center;
   color: #800020;
 }
+
+/* Layout & Container */
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.user-details .eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+/* Action Rows & Badges */
+.action-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.status-active {
+  background-color: #fce4ec;
+  color: #880e4f;
+}
+
+.badge-btn {
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.badge-btn:hover {
+  opacity: 0.85;
+}
+
+.view-badge-btn {
+  background-color: #880e4f;
+  color: #ffffff;
+}
+
+/* Course Row Customizations */
+.course-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border: 1px solid #f8bbd0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.course-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.course-title {
+  color: #880e4f;
+  font-size: 1rem;
+}
+
+.course-code {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+/* Modal Overlay & Card */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.modal-title {
+  color: #880e4f;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.modal-body p {
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+.modal-description-box {
+  margin-top: 0.75rem;
+  padding: 10px;
+  background-color: #fdf2f8;
+  border-radius: 6px;
+  border: 1px solid #f8bbd0;
+}
+
+.modal-description-box p {
+  margin-top: 0.25rem;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.modal-actions {
+  text-align: right;
+  margin-top: 1.25rem;
+}

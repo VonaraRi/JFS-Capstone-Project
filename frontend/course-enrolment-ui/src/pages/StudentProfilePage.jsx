@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import ErrorMessage from '../components/ErrorMessage.jsx';
 import LoadingMessage from '../components/LoadingMessage.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
-import { fetchMyEnrollments } from '../services/api.js';
+import { fetchCourses, fetchMyEnrollments } from '../services/api.js';
 
 export default function StudentProfilePage() {
   const { token, user } = useAuth();
   const [myEnrollments, setMyEnrollments] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -15,14 +16,24 @@ export default function StudentProfilePage() {
       try {
         setLoading(true);
         setError('');
-        const enrolledData = await fetchMyEnrollments(token);
 
-        // Filter for active enrolments
+        const [allCourses, enrolledData] = await Promise.all([
+          fetchCourses(token),
+          fetchMyEnrollments(token)
+        ]);
+
         const activeEnrollments = (enrolledData || []).filter(
           (item) => item.status === 'ENROLLED'
         );
 
-        setMyEnrollments(activeEnrollments);
+        // Map full course details onto each enrolment record
+        const courseMap = new Map((allCourses || []).map((c) => [c.id, c]));
+        const enrichedEnrollments = activeEnrollments.map((enrolment) => ({
+          ...enrolment,
+          courseDetails: courseMap.get(enrolment.courseId) || enrolment.course || {}
+        }));
+
+        setMyEnrollments(enrichedEnrollments);
       } catch (err) {
         setError(err.message || 'Failed to load profile data.');
       } finally {
@@ -64,19 +75,32 @@ export default function StudentProfilePage() {
             <p className="empty-state">You have not registered for any courses yet.</p>
           ) : (
             myEnrollments.map((enrolment) => (
-              <CourseRowItem key={enrolment.id} enrolment={enrolment} />
+              <CourseRowItem
+                key={enrolment.id}
+                enrolment={enrolment}
+                onViewDetails={(course) => setSelectedCourse(course)}
+              />
             ))
           )}
         </div>
       </section>
+
+      {/* Course Info Modal */}
+      {selectedCourse && (
+        <CourseDetailModal
+          course={selectedCourse}
+          onClose={() => setSelectedCourse(null)}
+        />
+      )}
     </div>
   );
 }
 
-// Sub-component to isolate row rendering logic
-function CourseRowItem({ enrolment }) {
-  const title = enrolment.courseTitle || enrolment.title || enrolment.course?.title || 'Course Title';
-  const code = enrolment.courseCode || enrolment.code || enrolment.course?.courseCode || 'N/A';
+// Sub-component for individual course row
+function CourseRowItem({ enrolment, onViewDetails }) {
+  const details = enrolment.courseDetails || {};
+  const title = details.title || enrolment.courseTitle || enrolment.title || 'Course Title';
+  const code = details.courseCode || details.code || enrolment.courseCode || enrolment.code || 'N/A';
 
   return (
     <div className="course-row">
@@ -84,7 +108,43 @@ function CourseRowItem({ enrolment }) {
         <strong className="course-title">{title}</strong>
         <span className="course-code">Course Code: {code}</span>
       </div>
-      <span className="status-badge status-active">Enrolled</span>
+      <div className="action-row">
+        <button
+          type="button"
+          className="badge-btn view-badge-btn"
+          onClick={() => onViewDetails(details)}
+        >
+          View
+        </button>
+        <span className="status-badge status-active">Enrolled</span>
+      </div>
+    </div>
+  );
+}
+
+// Sub-component for detailed course view modal
+function CourseDetailModal({ course, onClose }) {
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2 className="modal-title">{course.title || 'Course Details'}</h2>
+        
+        <div className="modal-body">
+          <p><strong>Course Code:</strong> {course.courseCode || course.code || 'N/A'}</p>
+          <p><strong>Category:</strong> {course.category || 'General'}</p>
+          <p><strong>Level:</strong> {course.level || 'N/A'}</p>
+          <div className="modal-description-box">
+            <strong>Description:</strong>
+            <p>{course.description || 'No description available.'}</p>
+          </div>
+        </div>
+
+        <div className="modal-actions">
+          <button type="button" className="button-primary" onClick={onClose}>
+            Close
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

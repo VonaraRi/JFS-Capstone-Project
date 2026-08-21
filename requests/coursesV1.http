@@ -1,8 +1,7 @@
 ### ====== Api Quality, Versioning, Docs and Reports ======
 
 @baseUrl= http://localhost:8000
-@adminToken= eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJBRE1JTiIsImlzcyI6ImNvdXJzZS1lbnJvbG1lbnQtYXBpIiwibmFtZSI6IkFkbWluIFVzZXIiLCJleHAiOjE3ODcyNTgyOTMsImlhdCI6MTc4NzI1NDY5MywidXNlcklkIjoiNmE4MzNjYWJjYTRjODA1NmYxZjI5MThlIn0.W4FjNhBJvR2526Gu3Eymx_W2OywafkHdanWHs1C3aQI
-### Public class check
+@adminToken= eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJBRE1JTiIsImlzcyI6ImNvdXJzZS1lbnJvbG1lbnQtYXBpIiwibmFtZSI6IkFkbWluIFVzZXIiLCJleHAiOjE3ODcyOTQ2NDYsImlhdCI6MTc4NzI5MTA0NiwidXNlcklkIjoiNmE4MzNjYWJjYTRjODA1NmYxZjI5MThlIn0.ixufm1kadMjlxloZSe2NrX__eq5Xck3KjP47RpIlopU
 GET {{baseUrl}}/api/class
 
 ### Public API information
