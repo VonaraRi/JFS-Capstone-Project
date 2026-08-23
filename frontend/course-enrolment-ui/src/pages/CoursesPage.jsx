@@ -28,6 +28,7 @@ export default function CoursesPage() {
     loadCoursesPage,
     refreshCourses,
     setSearchText,
+    setLevelFilter,
     setStatusFilter,
     selectCourse,
     changeCourseStatus
@@ -52,14 +53,16 @@ export default function CoursesPage() {
         loading={loading}
         onRefresh={refreshCourses}
         onPageSizeChange={(size) => loadCoursesPage({ page: 0, size })}
-        onSortChange={(sortBy, direction) => loadCoursesPage({ page: 0, sortBy: "courseCode", direction })}
+        onSortChange={(sortBy, direction) => loadCoursesPage({ page: 0, sortBy, direction })}
       />
 
       <FilterPanel
         searchText={filters.searchText}
         statusFilter={filters.statusFilter}
+        levelFilter={filters.levelFilter}
         onSearchChange={setSearchText}
         onStatusChange={setStatusFilter}
+        onLevelChange={setLevelFilter}
       />
 
       {loading && <LoadingMessage message="Loading course page..." />}

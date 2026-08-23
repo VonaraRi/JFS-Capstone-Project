@@ -35,8 +35,8 @@ npm run dev
 ### 🎯 1. Problem Statement
 
 * **Data Integrity**: Prevents duplicate course registrations.
-* **Error Prevention**: Blocks sign-ups for full or inactive classes.
-* **Automated Admin**: Replaces manual lists with real-time seat tracking and analytics reports.
+* **Registration Mistakes**: Prevents students from signing up for full or inactive classes.
+* **Manual Tracking**: Replaces manual lists with real-time seat tracking and analytics reports.
 
 ---
 
@@ -50,8 +50,8 @@ npm run dev
 
 ### 🔄 3. Main User Flow
 
-* **Student**: Register ➔ Login ➔ Browse Active Courses ➔ Enroll / Drop ➔ View Profile Enrolments.
-* **Admin**: Login ➔ Manage Courses (Create, Edit Capacity/Status) ➔ View Analytics Reports.
+* **Student**: Register ➔ Login ➔ Browse Active Courses ➔ Enroll / Drop ➔ View Personal Registered courses.
+* **Admin**: Login ➔ Manage Courses (Create, Edit Capacity/Status) ➔ Access aggregrated Analytics Reports.
 
 ---
 
@@ -98,7 +98,7 @@ npm run dev
 
 ---
 
-### 🛡️ 8. Business Rule ("No Inactive Course Enrolment")
+### 🛡️ 8. Validation or Business Rule ("Student cannot enroll in inactive courses")
 
 * **Frontend Guard**: Filters out inactive courses in `StudentRegisterCoursePage.jsx`:
   ```javascript
